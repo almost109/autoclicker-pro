@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "container:auto-clicker.xcodeproj">
+      location = "container:auto-clicker pro.xcodeproj">
    </FileRef>
 </Workspace>

@@ -37,9 +37,16 @@ struct MainView: View {
               since: .init())
     }
 
+    var isTargetTimeValid: Bool {
+        DelayTimer.targetDate(for: self.formState.targetTime) != nil
+    }
+
     func start() {
         if !self.hasStarted {
-            self.delayTimer.start(onFinish: self.autoClickSimulator.start)
+            let immediateFirstClick = self.formState.startMode == .targetTime
+            self.delayTimer.start {
+                self.autoClickSimulator.start(immediateFirstClick: immediateFirstClick)
+            }
             MenuBarService.changeImageColour(newColor: .systemOrange)
         }
     }
@@ -136,15 +143,30 @@ struct MainView: View {
                 }
 
                 ActionStageLine {
-                    Text("main_window_wait", comment: "Main window 'Wait'")
+                    Picker("main_window_start_mode", selection: self.$formState.startMode) {
+                        Text("main_window_start_mode_delay").tag(StartMode.delay)
+                        Text("main_window_start_mode_target_time").tag(StartMode.targetTime)
+                    }
+                    .pickerStyle(.segmented)
+                    .frame(width: 220)
+                    .disabled(self.hasStarted)
 
-                    DynamicWidthNumberField(placeholder: "",
-                                            min: MIN_START_DELAY,
-                                            max: MAX_START_DELAY,
-                                            number: self.$formState.startDelay)
-                        .disabled(self.hasStarted)
+                    if self.formState.startMode == .delay {
+                        Text("main_window_wait", comment: "Main window 'Wait'")
 
-                    Text(self.formState.startDelay == 1 ? "main_window_second" : "main_window_seconds", comment: "Main window 'second(s)'") + Text("main_window_before_starting", comment: "Main window 'before starting'") + Text("main_window_full_stop", comment: "Main window full stop")
+                        DynamicWidthNumberField(placeholder: "",
+                                                min: MIN_START_DELAY,
+                                                max: MAX_START_DELAY,
+                                                number: self.$formState.startDelay)
+                            .disabled(self.hasStarted)
+
+                        Text(self.formState.startDelay == 1 ? "main_window_second" : "main_window_seconds", comment: "Main window 'second(s)'") + Text("main_window_before_starting", comment: "Main window 'before starting'") + Text("main_window_full_stop", comment: "Main window full stop")
+                    } else {
+                        TextField("HH:mm:ss.SSS", text: self.$formState.targetTime)
+                            .textFieldStyle(UnderlinedTextFieldStyle())
+                            .frame(width: 105)
+                            .disabled(self.hasStarted)
+                    }
                 }
             }
             .padding(.top, 20)
@@ -162,7 +184,7 @@ struct MainView: View {
                             Text("main_window_start_btn", comment: "Main window start button").kerning(1)
                         }
                     }
-                    .disabled(self.hasStarted)
+                    .disabled(self.hasStarted || (self.formState.startMode == .targetTime && !self.isTargetTimeValid))
                     .buttonStyle(ThemedButtonStyle())
 
                     KeyboardShortcutHint(shortcut: KeyboardShortcuts.Name.pressStartButton.shortcut ?? KeyboardShortcuts.Name.pressStartButton.defaultShortcut!)

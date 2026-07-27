@@ -12,15 +12,15 @@ import Defaults
 import UserNotifications
 
 final class AutoClickSimulator: ObservableObject {
-    static var shared: AutoClickSimulator = .init()
+    static let shared: AutoClickSimulator = .init()
     private init() {}
 
-    @Published var isAutoClicking = false
+    private static let clickTimerLeeway: DispatchTimeInterval = .milliseconds(1)
 
-    @Published var remainingInterations: Int = 0
-
-    @Published var nextClickAt: Date = .init()
-    @Published var finalClickAt: Date = .init()
+    @Published private(set) var isAutoClicking = false
+    @Published private(set) var remainingIterations: Int = 0
+    @Published private(set) var nextClickAt: Date = .init()
+    @Published private(set) var finalClickAt: Date = .init()
 
     // Said weird behaviour is still occuring in 12.2.1, thus having these defined in here instead of Published, I hate this though so much
     private var duration: Duration = .milliseconds
@@ -28,7 +28,10 @@ final class AutoClickSimulator: ObservableObject {
     private var amountOfPresses: Int = DEFAULT_REPEAT_AMOUNT
     private var input = Input()
 
-    private var timer: Timer?
+    private var clickTimer: DispatchSourceTimer?
+    private var nextClickDeadline: DispatchTime?
+    private var scheduleReferenceDate: Date?
+    private var scheduleReferenceDeadline: DispatchTime?
     private var mouseLocation: NSPoint { NSEvent.mouseLocation }
     private var activity: Cancellable?
 
@@ -37,46 +40,46 @@ final class AutoClickSimulator: ObservableObject {
     private var initialMousePosition: NSPoint?
     private var mouseDeltaThreshold: CGFloat = 0.0
 
-    func start() {
+    func start(immediateFirstClick: Bool = false) {
         self.isAutoClicking = true
 
         // Stop mouse start monitoring if it's running
         self.stopMouseStartMonitoring()
 
-        if let startMenuItem = MenuBarService.startMenuItem {
-            startMenuItem.isEnabled = false
-        }
-
-        if let stopMenuItem = MenuBarService.stopMenuItem {
-            stopMenuItem.isEnabled = true
-        }
+        self.updateMenuState(isClicking: true)
 
         MenuBarService.changeImageColour(newColor: .systemBlue)
 
         self.activity = ProcessInfo.processInfo.beginActivity(.autoClicking)
 
         self.duration = Defaults[.autoClickerState].pressIntervalDuration
-        let intervalMode = Defaults[.autoClickerState].intervalMode
-        if intervalMode == .rangeInterval {
-            let min = Defaults[.autoClickerState].pressIntervalMin ?? DEFAULT_PRESS_INTERVAL_MIN
-            let max = Defaults[.autoClickerState].pressIntervalMax ?? DEFAULT_PRESS_INTERVAL_MAX
-            self.interval = Int.random(in: min...max)
-        } else {
-            self.interval = Defaults[.autoClickerState].pressInterval
-        }
+        self.updateInterval()
         self.input = Defaults[.autoClickerState].pressInput
         self.amountOfPresses = Defaults[.autoClickerState].pressAmount
-        self.remainingInterations = Defaults[.autoClickerState].repeatAmount
-
-        self.finalClickAt = .init(timeInterval: self.duration.asTimeInterval(interval: self.interval * self.remainingInterations), since: .init())
+        self.remainingIterations = Defaults[.autoClickerState].repeatAmount
 
         let timeInterval = self.duration.asTimeInterval(interval: self.interval)
-        self.nextClickAt = .init(timeInterval: timeInterval, since: .init())
-        self.timer = Timer.scheduledTimer(timeInterval: timeInterval,
-                                          target: self,
-                                          selector: #selector(self.tick),
-                                          userInfo: nil,
-                                          repeats: true)
+        let now = Date()
+        self.nextClickAt = now
+        let intervalsUntilFinalClick = immediateFirstClick
+            ? max(0, self.remainingIterations - 1)
+            : self.remainingIterations
+        self.finalClickAt = .init(
+            timeInterval: self.duration.asTimeInterval(interval: self.interval * intervalsUntilFinalClick),
+            since: now
+        )
+
+        if immediateFirstClick {
+            self.remainingIterations -= 1
+            self.press()
+
+            if self.remainingIterations <= 0 {
+                self.stop()
+                return
+            }
+        }
+
+        self.startClickTimer(after: timeInterval)
 
         if Defaults[.mouseStopOnMove] {
             self.initialMousePosition = nil
@@ -101,13 +104,7 @@ final class AutoClickSimulator: ObservableObject {
             self.monitorObject = nil
         }
 
-        if let startMenuItem = MenuBarService.startMenuItem {
-            startMenuItem.isEnabled = true
-        }
-
-        if let stopMenuItem = MenuBarService.stopMenuItem {
-            stopMenuItem.isEnabled = false
-        }
+        self.updateMenuState(isClicking: false)
 
         MenuBarService.resetImage()
 
@@ -115,20 +112,16 @@ final class AutoClickSimulator: ObservableObject {
         self.activity = nil
 
         // Force zero, as the user could stop the timer early
-        self.remainingInterations = 0
+        self.remainingIterations = 0
 
-        if let timer = self.timer {
-            timer.invalidate()
-        }
+        self.cancelClickTimer()
+
+        NotificationService.removePendingNotifications()
 
         if triggeredByMouseMovement {
-            NotificationService.removePendingNotifications()
-
             if Defaults[.notifyOnFinish] {
                 NotificationService.scheduleNotification(title: "Finished", date: Date())
             }
-        } else {
-            NotificationService.removePendingNotifications()
         }
 
         // Re-enable mouse start monitoring if it was enabled
@@ -159,12 +152,29 @@ final class AutoClickSimulator: ObservableObject {
         }
     }
 
-    @objc private func tick() {
-        self.remainingInterations -= 1
+    private func tick() {
+        guard self.isAutoClicking,
+              let currentDeadline = self.nextClickDeadline else {
+            return
+        }
+
+        self.remainingIterations -= 1
 
         self.press()
 
+        if self.remainingIterations <= 0 {
+            self.stop()
+            return
+        }
+
         // Update interval if in range mode
+        self.updateInterval()
+
+        let timeInterval = self.duration.asTimeInterval(interval: self.interval)
+        self.scheduleNextClick(at: currentDeadline + timeInterval)
+    }
+
+    private func updateInterval() {
         let intervalMode = Defaults[.autoClickerState].intervalMode
         if intervalMode == .rangeInterval {
             let min = Defaults[.autoClickerState].pressIntervalMin ?? DEFAULT_PRESS_INTERVAL_MIN
@@ -173,12 +183,57 @@ final class AutoClickSimulator: ObservableObject {
         } else {
             self.interval = Defaults[.autoClickerState].pressInterval
         }
+    }
 
-        self.nextClickAt = .init(timeInterval: self.duration.asTimeInterval(interval: self.interval), since: .init())
+    private func startClickTimer(after timeInterval: TimeInterval) {
+        let referenceDeadline = DispatchTime.now()
+        self.scheduleReferenceDeadline = referenceDeadline
+        self.scheduleReferenceDate = Date()
 
-        if self.remainingInterations <= 0 {
-            self.stop()
+        let firstDeadline = referenceDeadline + timeInterval
+        let timer = DispatchSource.makeTimerSource(queue: .main)
+        timer.setEventHandler { [weak self] in
+            self?.tick()
         }
+        self.clickTimer = timer
+        self.scheduleNextClick(at: firstDeadline)
+        timer.resume()
+    }
+
+    private func scheduleNextClick(at deadline: DispatchTime) {
+        self.nextClickDeadline = deadline
+        if let scheduledDate = self.date(for: deadline) {
+            self.nextClickAt = scheduledDate
+        }
+        self.clickTimer?.schedule(deadline: deadline, leeway: Self.clickTimerLeeway)
+    }
+
+    private func date(for deadline: DispatchTime) -> Date? {
+        guard let referenceDate = self.scheduleReferenceDate,
+              let referenceDeadline = self.scheduleReferenceDeadline else {
+            return nil
+        }
+
+        let referenceNanoseconds = referenceDeadline.uptimeNanoseconds
+        let deadlineNanoseconds = deadline.uptimeNanoseconds
+        let offsetNanoseconds = deadlineNanoseconds >= referenceNanoseconds
+            ? deadlineNanoseconds - referenceNanoseconds
+            : 0
+
+        return referenceDate.addingTimeInterval(TimeInterval(offsetNanoseconds) / 1_000_000_000)
+    }
+
+    private func cancelClickTimer() {
+        self.clickTimer?.cancel()
+        self.clickTimer = nil
+        self.nextClickDeadline = nil
+        self.scheduleReferenceDate = nil
+        self.scheduleReferenceDeadline = nil
+    }
+
+    private func updateMenuState(isClicking: Bool) {
+        MenuBarService.startMenuItem?.isEnabled = !isClicking
+        MenuBarService.stopMenuItem?.isEnabled = isClicking
     }
 
     private func startMouseMonitoring() {
@@ -244,30 +299,34 @@ final class AutoClickSimulator: ObservableObject {
         .otherMouseUp: .center
     ]
 
-    private func generateMouseClickEvents(source: CGEventSource?) -> [CGEvent?] {
+    private func generateMouseClickEvents(source: CGEventSource?) -> [CGEvent] {
         let mouseX = self.mouseLocation.x
         let mouseY = NSScreen.screens[0].frame.height - mouseLocation.y
 
         let clickingAtPoint = CGPoint(x: mouseX, y: mouseY)
 
-        let mouseDownType: CGEventType = mouseDownEventMap[self.input.type]!
-        let mouseUpType: CGEventType = mouseUpEventMap[self.input.type]!
-        let mouseButton: CGMouseButton = mouseButtonEventMap[self.input.type]!
-
-        let mouseDown = CGEvent(mouseEventSource: source,
-                                mouseType: mouseDownType,
-                                mouseCursorPosition: clickingAtPoint,
-                                mouseButton: mouseButton)
-
-        let mouseUp = CGEvent(mouseEventSource: source,
-                              mouseType: mouseUpType,
-                              mouseCursorPosition: clickingAtPoint,
-                              mouseButton: mouseButton)
+        guard let mouseDownType = self.mouseDownEventMap[self.input.type],
+              let mouseUpType = self.mouseUpEventMap[self.input.type],
+              let mouseButton = self.mouseButtonEventMap[self.input.type],
+              let mouseDown = CGEvent(
+                mouseEventSource: source,
+                mouseType: mouseDownType,
+                mouseCursorPosition: clickingAtPoint,
+                mouseButton: mouseButton
+              ),
+              let mouseUp = CGEvent(
+                mouseEventSource: source,
+                mouseType: mouseUpType,
+                mouseCursorPosition: clickingAtPoint,
+                mouseButton: mouseButton
+              ) else {
+            return []
+        }
 
         return [mouseDown, mouseUp]
     }
 
-    private func generateKeyPressEvents(source: CGEventSource?) -> [CGEvent?] {
+    private func generateKeyPressEvents(source: CGEventSource?) -> [CGEvent] {
         let keyDown = CGEvent(keyboardEventSource: source,
                               virtualKey: CGKeyCode(self.input.keyCode),
                               keyDown: true)
@@ -296,7 +355,7 @@ final class AutoClickSimulator: ObservableObject {
             keyUp?.flags = CGEventFlags.maskShift
         }
 
-        return [keyDown, keyUp]
+        return [keyDown, keyUp].compactMap { $0 }
     }
 
     private func press() {
@@ -310,9 +369,9 @@ final class AutoClickSimulator: ObservableObject {
 
         while completedPressesThisAction < self.amountOfPresses {
             for event in pressEvents {
-                event!.post(tap: .cghidEventTap)
+                event.post(tap: .cghidEventTap)
 
-                LoggerService.simPress(input: self.input, location: event!.location)
+                LoggerService.simPress(input: self.input, location: event.location)
             }
 
             completedPressesThisAction += 1

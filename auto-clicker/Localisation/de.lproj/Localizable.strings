@@ -120,3 +120,6 @@
 "left_mouse_click" = "Linke Maustaste";
 "right_mouse_click" = "Rechte Maustaste";
 "middle_mouse_click" = "Mittlere Maustaste";
+"main_window_start_mode" = "Startmodus";
+"main_window_start_mode_delay" = "Verzögerung";
+"main_window_start_mode_target_time" = "Zielzeit";

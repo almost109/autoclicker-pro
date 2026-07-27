@@ -121,3 +121,6 @@
 "left_mouse_click" = "Click izquierdo";
 "right_mouse_click" = "Click derecho";
 "middle_mouse_click" = "Click en el medio";
+"main_window_start_mode" = "Modo de inicio";
+"main_window_start_mode_delay" = "Retraso";
+"main_window_start_mode_target_time" = "Hora objetivo";

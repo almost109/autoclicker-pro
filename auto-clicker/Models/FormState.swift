@@ -14,6 +14,13 @@ enum IntervalMode: String, Codable, CaseIterable, Identifiable {
     var id: String { self.rawValue }
 }
 
+enum StartMode: String, Codable, CaseIterable, Identifiable {
+    case delay
+    case targetTime
+
+    var id: String { self.rawValue }
+}
+
 struct FormState: Codable, Defaults.Serializable {
     var intervalMode: IntervalMode // new: static or range
     var pressInterval: Int
@@ -23,6 +30,8 @@ struct FormState: Codable, Defaults.Serializable {
     var pressInput: Input
     var pressAmount: Int
     var startDelay: Int
+    var startMode: StartMode
+    var targetTime: String
     var repeatAmount: Int
 }
 
@@ -36,6 +45,38 @@ extension FormState {
         self.pressInput = Input()
         self.pressAmount = DEFAULT_PRESS_AMOUNT
         self.startDelay = DEFAULT_START_DELAY
+        self.startMode = .delay
+        self.targetTime = "00:00:00.000"
         self.repeatAmount = DEFAULT_REPEAT_AMOUNT
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case intervalMode
+        case pressInterval
+        case pressIntervalMin
+        case pressIntervalMax
+        case pressIntervalDuration
+        case pressInput
+        case pressAmount
+        case startDelay
+        case startMode
+        case targetTime
+        case repeatAmount
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        self.intervalMode = try container.decodeIfPresent(IntervalMode.self, forKey: .intervalMode) ?? .staticInterval
+        self.pressInterval = try container.decode(Int.self, forKey: .pressInterval)
+        self.pressIntervalMin = try container.decodeIfPresent(Int.self, forKey: .pressIntervalMin)
+        self.pressIntervalMax = try container.decodeIfPresent(Int.self, forKey: .pressIntervalMax)
+        self.pressIntervalDuration = try container.decode(Duration.self, forKey: .pressIntervalDuration)
+        self.pressInput = try container.decode(Input.self, forKey: .pressInput)
+        self.pressAmount = try container.decode(Int.self, forKey: .pressAmount)
+        self.startDelay = try container.decode(Int.self, forKey: .startDelay)
+        self.startMode = try container.decodeIfPresent(StartMode.self, forKey: .startMode) ?? .delay
+        self.targetTime = try container.decodeIfPresent(String.self, forKey: .targetTime) ?? "00:00:00.000"
+        self.repeatAmount = try container.decode(Int.self, forKey: .repeatAmount)
     }
 }
