@@ -26,7 +26,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
         MenuBarService.refreshState()
 
-        PermissionsService.acquireAccessibilityPrivileges()
+        let permissionsService = PermissionsService.shared
+        permissionsService.requestAccessibilityPrivilegesIfNeeded()
+        self.refreshAccessibilityState()
+
         SNTPService.shared.startSynchronizing()
 
         // Initialize mouse start monitoring if enabled
@@ -45,6 +48,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
     func applicationWillBecomeActive(_ notification: Notification) {
         WindowStateService.refreshKeepWindowOnTop()
+    }
+
+    func applicationDidBecomeActive(_ notification: Notification) {
+        self.refreshAccessibilityState()
     }
 
     func applicationDidHide(_ notification: Notification) {
@@ -109,5 +116,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
                 comment: "Menu bar item show/hide option suffix"
             )
         ].joined(separator: " ")
+    }
+
+    private func refreshAccessibilityState() {
+        let permissionsService = PermissionsService.shared
+        guard !permissionsService.refreshAccessibilityPrivileges() else {
+            MenuBarService.enableAllMenuBarItems()
+            return
+        }
+
+        MenuBarService.disableAllMenuBarItems()
+        permissionsService.pollAccessibilityPrivileges {
+            MenuBarService.enableAllMenuBarItems()
+        }
     }
 }

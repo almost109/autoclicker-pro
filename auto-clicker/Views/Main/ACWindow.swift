@@ -24,10 +24,5 @@ struct ACWindow: View {
             }
         }
         .animation(.easeInOut(duration: 0.45), value: self.permissionsService.isTrusted)
-        .onAppear {
-            self.permissionsService.pollAccessibilityPrivileges(onTrusted: {
-                MenuBarService.enableAllMenuBarItems()
-            })
-        }
     }
 }

@@ -13,31 +13,76 @@ final class PermissionsService: ObservableObject {
 
     @Published private(set) var isTrusted = AXIsProcessTrusted()
 
+    private var pollingWorkItem: DispatchWorkItem?
+    private var onTrusted: (() -> Void)?
+
     private init() {}
 
-    func pollAccessibilityPrivileges(onTrusted: @escaping () -> Void) {
-        LoggerService.permissionTrustedState()
+    @discardableResult
+    func refreshAccessibilityPrivileges() -> Bool {
+        let isCurrentlyTrusted = AXIsProcessTrusted()
+        if self.isTrusted != isCurrentlyTrusted {
+            self.isTrusted = isCurrentlyTrusted
+        }
 
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) { [weak self] in
+        if isCurrentlyTrusted {
+            self.finishPolling()
+        }
+
+        return isCurrentlyTrusted
+    }
+
+    func pollAccessibilityPrivileges(onTrusted: @escaping () -> Void) {
+        self.onTrusted = onTrusted
+        guard !self.refreshAccessibilityPrivileges() else {
+            return
+        }
+
+        self.schedulePermissionCheck()
+    }
+
+    func requestAccessibilityPrivilegesIfNeeded() {
+        guard !self.refreshAccessibilityPrivileges() else {
+            return
+        }
+
+        let promptKey = kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String
+        let options = [promptKey: true] as CFDictionary
+        let enabled = AXIsProcessTrustedWithOptions(options)
+        self.isTrusted = enabled
+        LoggerService.permissionState(enabled: enabled)
+
+        if enabled {
+            self.finishPolling()
+        }
+    }
+
+    private func schedulePermissionCheck() {
+        guard self.pollingWorkItem == nil else {
+            return
+        }
+
+        let workItem = DispatchWorkItem { [weak self] in
             guard let self else {
                 return
             }
 
-            self.isTrusted = AXIsProcessTrusted()
-
-            if self.isTrusted {
-                onTrusted()
-            } else {
-                self.pollAccessibilityPrivileges(onTrusted: onTrusted)
+            self.pollingWorkItem = nil
+            if !self.refreshAccessibilityPrivileges() {
+                self.schedulePermissionCheck()
             }
         }
+        self.pollingWorkItem = workItem
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1, execute: workItem)
     }
 
-    static func acquireAccessibilityPrivileges() {
-        let options: NSDictionary = [kAXTrustedCheckOptionPrompt.takeRetainedValue() as NSString: true]
-        let enabled = AXIsProcessTrustedWithOptions(options)
+    private func finishPolling() {
+        self.pollingWorkItem?.cancel()
+        self.pollingWorkItem = nil
 
-        LoggerService.permissionState(enabled: enabled)
+        let completion = self.onTrusted
+        self.onTrusted = nil
+        completion?()
     }
 
     static func acquireNotificationPermissions() {
