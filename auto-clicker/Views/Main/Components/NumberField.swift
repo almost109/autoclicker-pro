@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import Combine
 
 struct NumberField: View {
     var text: String
@@ -19,8 +18,8 @@ struct NumberField: View {
 
     @State private var rawString: String = ""
 
-    func numericValidator(newValue: String) {
-        let newValueNumbersOnly = newValue.filter { "0123456789".contains($0) }
+    private func validate(_ newValue: String) {
+        let newValueNumbersOnly = newValue.filter(\.isWholeNumber)
 
         guard newValue == newValueNumbersOnly else {
             self.rawString = newValueNumbersOnly
@@ -54,15 +53,9 @@ struct NumberField: View {
             .accessibilityLabel(self.accessibilityLabel)
             .accessibilityValue(self.rawString)
             .accessibilityHint(self.accessibilityHint)
-            .onReceive(Just(self.rawString), perform: self.numericValidator)
-            .onAppear(perform: {
+            .onChange(of: self.rawString, perform: self.validate)
+            .onAppear {
                 self.rawString = String(self.number)
-            })
+            }
     }
 }
-
-//struct NumberField_Previews: PreviewProvider {
-//    static var previews: some View {
-//        NumberField(text: "Number Field", min: 0, max: 100, number: .constant(10))
-//    }
-//}

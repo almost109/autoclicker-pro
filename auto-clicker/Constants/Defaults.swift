@@ -5,8 +5,6 @@
 //  Created by Ben Tindall on 30/03/2022.
 //
 
-import Foundation
-import Cocoa
 import Defaults
 
 extension Defaults.Keys {

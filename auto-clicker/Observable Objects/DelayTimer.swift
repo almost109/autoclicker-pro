@@ -15,20 +15,23 @@ final class DelayTimer: ObservableObject {
     private init() {}
 
     private static let defaultCountdownText: String = "-"
-    private static let targetTimerLeeway: DispatchTimeInterval = .milliseconds(1)
     private static let countdownInterval: DispatchTimeInterval = .milliseconds(40)
     private static let countdownLeeway: DispatchTimeInterval = .milliseconds(2)
 
     @Published private(set) var isCountingDown = false
-    @Published private(set) var remainingDelaySeconds: Int = DEFAULT_START_DELAY
     @Published private(set) var countdownText: String = DelayTimer.defaultCountdownText
 
     private var onFinish: (() -> Void)?
+    private var remainingDelaySeconds: Int = DEFAULT_START_DELAY
     private var delayTimer: Timer?
-    private var targetTimer: DispatchSourceTimer?
     private var countdownTimer: DispatchSourceTimer?
-    private var targetDeadline: DispatchTime?
+    private var targetTimestamp: TimeInterval?
     private var activity: Cancellable?
+    private lazy var targetScheduler = HighPrecisionScheduler(
+        spinThreshold: 0.005
+    ) {
+        SNTPService.shared.currentNetworkTimestamp()
+    }
 
     func start(onFinish: @escaping () -> Void) {
         if Defaults[.autoClickerState].startMode == .targetTime {
@@ -39,7 +42,7 @@ final class DelayTimer: ObservableObject {
         let delayInSeconds = Defaults[.autoClickerState].startDelay
 
         self.onFinish = onFinish
-        self.updateMenuState(isWaiting: true)
+        MenuBarService.updateExecutionState(isRunning: true)
 
         if delayInSeconds > 0 {
             self.remainingDelaySeconds = delayInSeconds
@@ -49,7 +52,7 @@ final class DelayTimer: ObservableObject {
             self.updateButtonText()
 
             self.delayTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
-                MainActor.assumeIsolated {
+                Task { @MainActor in
                     self?.tick()
                 }
             }
@@ -91,9 +94,7 @@ final class DelayTimer: ObservableObject {
     }
 
     private func startAtTargetTime(onFinish: @escaping () -> Void) {
-        let localClockNow = Date()
-        let clockOffset = SNTPService.shared.currentOffset()
-        let networkClockNow = localClockNow.addingTimeInterval(clockOffset)
+        let networkClockNow = SNTPService.shared.currentNetworkTime()
         guard let targetDate = Self.targetDate(
             for: Defaults[.autoClickerState].targetTime,
             now: networkClockNow
@@ -104,20 +105,15 @@ final class DelayTimer: ObservableObject {
         self.onFinish = onFinish
         self.isCountingDown = true
         self.activity = ProcessInfo.processInfo.beginActivity(.delayTimer)
-        self.updateMenuState(isWaiting: true)
+        MenuBarService.updateExecutionState(isRunning: true)
 
-        let remaining = max(0, targetDate.timeIntervalSince(networkClockNow))
-        let deadline = DispatchTime.now() + remaining
-        self.targetDeadline = deadline
+        let targetTimestamp = targetDate.timeIntervalSinceReferenceDate
+        self.targetTimestamp = targetTimestamp
         self.updateTargetCountdown()
 
-        let targetTimer = DispatchSource.makeTimerSource(queue: .main)
-        targetTimer.schedule(deadline: deadline, leeway: Self.targetTimerLeeway)
-        targetTimer.setEventHandler { [weak self] in
+        self.targetScheduler.schedule(at: targetTimestamp) { [weak self] in
             self?.targetTimeReached()
         }
-        self.targetTimer = targetTimer
-        targetTimer.resume()
 
         let countdownTimer = DispatchSource.makeTimerSource(queue: .main)
         countdownTimer.schedule(
@@ -136,7 +132,7 @@ final class DelayTimer: ObservableObject {
         self.finish()
     }
 
-    func tick() {
+    private func tick() {
         self.remainingDelaySeconds -= 1
 
         self.updateButtonText()
@@ -150,7 +146,7 @@ final class DelayTimer: ObservableObject {
         self.delayTimer?.invalidate()
         self.delayTimer = nil
 
-        self.cancelDispatchTimer(&self.targetTimer)
+        self.targetScheduler.cancel()
         self.cancelDispatchTimer(&self.countdownTimer)
         self.resetCountdownState()
         self.onFinish = nil
@@ -159,19 +155,20 @@ final class DelayTimer: ObservableObject {
         self.activity = nil
     }
 
-    func updateButtonText() {
+    private func updateButtonText() {
         self.countdownText = String(self.remainingDelaySeconds)
     }
 
     private func updateTargetCountdown() {
-        guard let targetDeadline = self.targetDeadline else {
+        guard let targetTimestamp = self.targetTimestamp else {
             return
         }
 
-        let now = DispatchTime.now().uptimeNanoseconds
-        let deadline = targetDeadline.uptimeNanoseconds
-        let nanosecondsRemaining = deadline > now ? deadline - now : 0
-        let millisecondsRemaining = Int((nanosecondsRemaining + 999_999) / 1_000_000)
+        let remaining = max(
+            0,
+            targetTimestamp - SNTPService.shared.currentNetworkTimestamp()
+        )
+        let millisecondsRemaining = Int(ceil(remaining * 1_000))
         let minutes = millisecondsRemaining / 60_000
         let seconds = (millisecondsRemaining % 60_000) / 1_000
         let milliseconds = millisecondsRemaining % 1_000
@@ -184,18 +181,13 @@ final class DelayTimer: ObservableObject {
         completion?()
     }
 
-    private func updateMenuState(isWaiting: Bool) {
-        MenuBarService.startMenuItem?.isEnabled = !isWaiting
-        MenuBarService.stopMenuItem?.isEnabled = isWaiting
-    }
-
     private func cancelDispatchTimer(_ timer: inout DispatchSourceTimer?) {
         timer?.cancel()
         timer = nil
     }
 
     private func resetCountdownState() {
-        self.targetDeadline = nil
+        self.targetTimestamp = nil
         self.remainingDelaySeconds = DEFAULT_START_DELAY
         self.countdownText = Self.defaultCountdownText
         self.isCountingDown = false

@@ -2,7 +2,6 @@
 "permissions_help_first_paragraph" = "AutoClicker Pro benötigt die Berechtigung für Bedienungshilfen, um Mausklicks zu simulieren.";
 "permissions_help_second_paragraph" = "Diese Berechtigung ist nur einmal erforderlich.\n\nKehre nach dem Erteilen der Berechtigung zu AutoClicker Pro zurück. Die Anwendung wird automatisch fortgesetzt.";
 "permissions_help_open_sys_pref_btn" = "Bedienungshilfen öffnen";
-"permissions_help_unlock_note" = "Die App wird automatisch innerhalb weniger Sekunden entsperrt, nachdem die Berechtigung erteilt wurde.";
 "permissions_help_quit_btn" = "Beenden";
 "permissions_status_required" = "Berechtigung erforderlich";
 "permissions_status_granted" = "Berechtigung erteilt";
@@ -12,28 +11,14 @@
 "about_url_short" = "github.com/almost109/AutoClicker-Pro";
 "about_subtitle" = "Präzises automatisches Klicken für macOS";
 
-"main_window_comma" = ",";
-"main_window_full_stop" = ".";
-"main_window_every" = "Alle";
-"main_window_press" = "klicke";
 "main_window_time" = "mal";
 "main_window_times" = "mal";
 "main_window_click" = "Klick";
 "main_window_clicks" = "Klicks";
-"main_window_repeat" = "wiederhole";
-"main_window_wait" = "Warte";
-"main_window_second" = "Sekunde";
-"main_window_seconds" = "Sekunden";
-"main_window_before_starting" = " vor dem Starten";
 "main_window_start_btn" = "STARTEN";
 "main_window_stop_btn" = "STOPPEN";
-"main_window_stat_box_next_press_at" = "NÄCHSTER KLICK UM";
-"main_window_stat_box_final_press_at" = "LETZTER KLICK UM";
 "main_window_to" = "bis";
-"main_window_min" = "Min.";
-"main_window_max" = "Max.";
 
-"interval_mode" = "";
 "static" = "Statisch";
 "range" = "Bereich";
 
@@ -43,13 +28,7 @@
 "duration_hours" = "Stunde(n)";
 "duration_modal_cancel_button" = "Abbrechen";
 
-"mousemove_enabled" = "stoppen";
-"mousemove_disabled" = "fortfahren";
-"mousemove_modal_cancel_button" = "Abbrechen";
 
-"key_listener_modal_press_prompt" = "Drücke deine gewünschte Taste…";
-"key_listener_modal_dismiss_key_prompt" = "Halte die Escape-Taste, wenn du fertig bist.";
-"key_listener_modal_dismiss_key_override" = "Um die Escape-Taste selbst zu verwenden, drücke sie zweimal.";
 "key_listener_modal_title" = "Klickaktion";
 "key_listener_modal_waiting" = "Warten auf Eingabe…";
 "key_listener_modal_instruction" = "Klicke eine Maustaste oder drücke eine Taste.";
@@ -57,7 +36,6 @@
 
 "settings_general" = "Allgemein";
 "settings_shortcuts" = "Tastenkürzel";
-"settings_window" = "Fenster";
 "settings_appearance" = "Erscheinungsbild";
 
 "settings_general_interval_mode_title" = "Klick-Intervall-Modus";
@@ -135,7 +113,6 @@
 "main_window_start_mode" = "Startmodus";
 "main_window_start_mode_delay" = "Verzögerung";
 "main_window_start_mode_target_time" = "Zielzeit";
-"main_window_target_time" = "Zielzeit";
 "main_window_tagline" = "ein Klick, präzise wiederholt";
 "main_window_click_settings" = "Klickeinstellungen";
 "main_window_click_interval" = "Klickintervall";
@@ -144,18 +121,12 @@
 "main_window_target_time_24_hour" = "Zielzeit (24 Stunden)";
 "main_window_delay_seconds" = "Verzögerung (Sekunden)";
 "main_window_click_rate" = "≈ %.1f Klicks/s";
-"main_window_click_rate_calculation" = "%.0f ÷ %lld = %.1f Klicks/s";
 "main_window_estimated_duration_value" = "≈ %.1f Sek.";
-"main_window_estimated_duration_calculation" = "%lld × %lld %@";
 "main_window_start_caption" = "— das Klicken beginnt genau beim Erreichen der Zielzeit —";
 "main_window_summary_target_time" = "Zielzeit";
 "main_window_summary_estimated_finish" = "Voraussichtliches Ende";
 "main_window_summary_estimated_duration" = "Geschätzte Dauer";
 "main_window_summary_delay_value" = "+%lld Sek.";
-"duration_abbreviation_milliseconds" = "ms";
-"duration_abbreviation_seconds" = "Sek.";
-"duration_abbreviation_minutes" = "Min.";
-"duration_abbreviation_hours" = "Std.";
 "network_time_title" = "Netzwerkzeit";
 "network_time_current_time" = "Aktuelle Uhrzeit";
 "network_time_status_offline" = "Offline";
@@ -167,8 +138,6 @@
 "network_time_server" = "NTP-Server";
 "network_time_offset" = "Zeitabweichung";
 "network_time_rtt" = "Roundtrip";
-"network_time_last_sync" = "Letzte Synchronisierung";
-"network_time_waiting" = "Warten auf die erste Synchronisierung";
 "network_time_not_available" = "Nicht verfügbar";
 
 "accessibility_click_interval" = "Klickintervall";
@@ -192,4 +161,3 @@
 "accessibility_start_countdown_hint" = "Das automatische Klicken beginnt, wenn der Countdown abgelaufen ist.";
 "accessibility_stop_button_hint" = "Stoppt den Countdown oder das automatische Klicken.";
 "accessibility_network_time_dashboard" = "Details zur Netzwerkzeitsynchronisierung";
-"accessibility_network_time_footer" = "Zusammenfassung der Netzwerkzeit";

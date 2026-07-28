@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct HelpCommands: Commands {
-    let ghIssueLink = "https://github.com/almost109/AutoClicker-Pro/issues"
+    private static let issueURL = URL(
+        string: "https://github.com/almost109/AutoClicker-Pro/issues"
+    )
 
     var body: some Commands {
         CommandGroup(replacing: .help, addition: {
@@ -22,7 +24,7 @@ struct HelpCommands: Commands {
     }
 
     private func openIssuesPage() {
-        guard let url = URL(string: self.ghIssueLink) else {
+        guard let url = Self.issueURL else {
             return
         }
         NSWorkspace.shared.open(url)

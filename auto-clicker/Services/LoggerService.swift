@@ -5,9 +5,10 @@
 //  Created by Ben Tindall on 12/04/2022.
 //
 
-import SwiftUI
+import AppKit
+import Foundation
 
-final class LoggerService {
+enum LoggerService {
     private static func log(file: String, function: String, _ lines: [String]) {
         #if DEBUG
         NSLog(">~  Who: \(file) ~ \(function)")
@@ -43,14 +44,6 @@ final class LoggerService {
     static func permissionTrustedState(callingFile: String = #fileID, callingFunction: String = #function) {
         LoggerService.log(file: callingFile, function: callingFunction, [
             "Is trusted: \(AXIsProcessTrusted())"
-        ])
-    }
-
-    static func numberValidator<CallingView: View>(view: CallingView, oldNumber: Int, oldString: String, newString: String, newIntString: String, callingFile: String = #fileID, callingFunction: String = #function) {
-        LoggerService.log(file: callingFile, function: callingFunction, [
-            "View: \(String(describing: type(of: view)))",
-            "Old Number: \(oldNumber) | Old Value: \(oldString)",
-            "New Number: \(newIntString) | New Value: \(newString)"
         ])
     }
 

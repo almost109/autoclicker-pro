@@ -5,7 +5,6 @@
 //  Created by Ben Tindall on 17/07/2022.
 //
 
-import Foundation
 import KeyboardShortcuts
 
 extension KeyboardShortcuts.Shortcut {

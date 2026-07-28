@@ -2,7 +2,6 @@
 "permissions_help_first_paragraph"   = "AutoClicker Pro requires Accessibility permission to simulate mouse clicks.";
 "permissions_help_second_paragraph"  = "This permission is required only once.\n\nAfter granting permission, return to AutoClicker Pro and the application will continue automatically.";
 "permissions_help_open_sys_pref_btn" = "Open Accessibility Settings";
-"permissions_help_unlock_note"       = "The app will automatically unlock within a few seconds of the permission being granted.";
 "permissions_help_quit_btn"          = "Quit";
 "permissions_status_required"        = "Permission Required";
 "permissions_status_granted"         = "Permission Granted";
@@ -12,28 +11,14 @@
 "about_url_short" = "github.com/almost109/AutoClicker-Pro";
 "about_subtitle" = "Precision auto-clicking for macOS";
 
-"main_window_comma"                   = ",";
-"main_window_full_stop"               = ".";
-"main_window_every"                   = "Every";
-"main_window_press"                   = "press";
 "main_window_time"                    = "time";
 "main_window_times"                   = "times";
 "main_window_click"                   = "click";
 "main_window_clicks"                  = "clicks";
-"main_window_repeat"                  = "repeat";
-"main_window_wait"                    = "Wait";
-"main_window_second"                  = "second";
-"main_window_seconds"                 = "seconds";
-"main_window_before_starting"         = " before starting";
 "main_window_start_btn"               = "START";
 "main_window_stop_btn"                = "STOP";
-"main_window_stat_box_next_press_at"  = "NEXT PRESS AT";
-"main_window_stat_box_final_press_at" = "FINAL PRESS AT";
 "main_window_to"                      = "to";
-"main_window_min"                     = "Min";
-"main_window_max"                     = "Max";
 
-"interval_mode" = "";
 "static" = "Static";
 "range" = "Range";
 
@@ -43,13 +28,7 @@
 "duration_hours"               = "Hour(s)";
 "duration_modal_cancel_button" = "Cancel";
 
-"mousemove_enabled"             = "stop";
-"mousemove_disabled"            = "continue";
-"mousemove_modal_cancel_button" = "Cancel";
 
-"key_listener_modal_press_prompt"         = "Press your desired input…";
-"key_listener_modal_dismiss_key_prompt"   = "Hold the escape key when done.";
-"key_listener_modal_dismiss_key_override" = "To use the escape key itself, press it twice.";
 "key_listener_modal_title"                = "Click Action";
 "key_listener_modal_waiting"              = "Waiting for input…";
 "key_listener_modal_instruction"          = "Click any mouse button or press a key.";
@@ -57,7 +36,6 @@
 
 "settings_general"            = "General";
 "settings_shortcuts"          = "Shortcuts";
-"settings_window"             = "Window";
 "settings_appearance"         = "Appearance";
 
 "settings_general_interval_mode_title" = "Click Interval Mode";
@@ -135,7 +113,6 @@
 "main_window_start_mode" = "Start mode";
 "main_window_start_mode_delay" = "Delay";
 "main_window_start_mode_target_time" = "Target Time";
-"main_window_target_time" = "Target time";
 "main_window_tagline" = "one stroke, repeated precisely";
 "main_window_click_settings" = "Click Settings";
 "main_window_click_interval" = "Click Interval";
@@ -144,18 +121,12 @@
 "main_window_target_time_24_hour" = "Target Time (24-hour)";
 "main_window_delay_seconds" = "Delay (seconds)";
 "main_window_click_rate" = "≈ %.1f clicks/s";
-"main_window_click_rate_calculation" = "%.0f ÷ %lld = %.1f clicks/s";
 "main_window_estimated_duration_value" = "≈ %.1f sec";
-"main_window_estimated_duration_calculation" = "%lld × %lld %@";
 "main_window_start_caption" = "— clicking begins the moment the target time is reached —";
 "main_window_summary_target_time" = "Target Time";
 "main_window_summary_estimated_finish" = "Estimated Finish";
 "main_window_summary_estimated_duration" = "Estimated Duration";
 "main_window_summary_delay_value" = "+%lld sec";
-"duration_abbreviation_milliseconds" = "ms";
-"duration_abbreviation_seconds" = "sec";
-"duration_abbreviation_minutes" = "min";
-"duration_abbreviation_hours" = "hr";
 "network_time_title" = "Network Time";
 "network_time_current_time" = "Current Time";
 "network_time_status_offline" = "Offline";
@@ -167,8 +138,6 @@
 "network_time_server" = "NTP Server";
 "network_time_offset" = "Clock Offset";
 "network_time_rtt" = "Round Trip";
-"network_time_last_sync" = "Last Sync";
-"network_time_waiting" = "Waiting for first synchronization";
 "network_time_not_available" = "Not available";
 
 "accessibility_click_interval" = "Click interval";
@@ -192,4 +161,3 @@
 "accessibility_start_countdown_hint" = "Automatic clicking will begin when the countdown finishes.";
 "accessibility_stop_button_hint" = "Stops the countdown or automatic clicking.";
 "accessibility_network_time_dashboard" = "Network time synchronization details";
-"accessibility_network_time_footer" = "Network time summary";

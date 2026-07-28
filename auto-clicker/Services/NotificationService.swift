@@ -8,28 +8,34 @@
 import Foundation
 import UserNotifications
 
-final class NotificationService: ObservableObject {
+enum NotificationService {
     static func scheduleNotification(title: String, body: String? = nil, date: Date) {
         let content = UNMutableNotificationContent()
         content.title = title
         content.sound = UNNotificationSound.default
 
-        if let body = body {
+        if let body {
             content.body = body
         }
 
-        let interval = date.timeIntervalSinceNow.rounded() > 0 ? date.timeIntervalSinceNow.rounded() : 1
+        let interval = max(1, date.timeIntervalSinceNow.rounded())
 
-        LoggerService.logNotification(title: title,
-                                      date: date,
-                                      interval: interval)
+        LoggerService.logNotification(
+            title: title,
+            date: date,
+            interval: interval
+        )
 
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: interval,
-                                                        repeats: false)
+        let trigger = UNTimeIntervalNotificationTrigger(
+            timeInterval: interval,
+            repeats: false
+        )
 
-        let request = UNNotificationRequest(identifier: UUID().uuidString,
-                                            content: content,
-                                            trigger: trigger)
+        let request = UNNotificationRequest(
+            identifier: UUID().uuidString,
+            content: content,
+            trigger: trigger
+        )
 
         UNUserNotificationCenter.current().add(request)
     }

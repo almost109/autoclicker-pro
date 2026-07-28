@@ -5,15 +5,12 @@
 //  Created by Ben Tindall on 30/03/2022.
 //
 
-import Foundation
-import SwiftUI
 import Defaults
 import LaunchAtLogin
-import UserNotifications
+import SwiftUI
 
 struct GeneralSettingsTabView: View {
     @Default(.menuBarShowIcon) private var menuBarShowIcon
-    @Default(.appShouldQuitOnClose) private var appShouldQuitOnClose
     @Default(.autoClickerState) private var formState
 
     var body: some View {
@@ -38,7 +35,7 @@ struct GeneralSettingsTabView: View {
                 help: "settings_general_app_should_quit_on_close_help"
             ) {
                 Defaults.Toggle(
-                    " " + String(format: NSLocalizedString("settings_general_app_should_quit_on_close", comment: "App should quit on close toggle")),
+                    " " + String(localized: "settings_general_app_should_quit_on_close"),
                     key: .appShouldQuitOnClose
                 )
             }
@@ -48,7 +45,7 @@ struct GeneralSettingsTabView: View {
                 divider: true
             ) {
                 LaunchAtLogin.Toggle {
-                    Text(" " + String(format: NSLocalizedString("settings_general_launch_on_login", comment: "App should launch at login toggle")))
+                    Text(" " + String(localized: "settings_general_launch_on_login"))
                 }
             }
 
@@ -58,7 +55,7 @@ struct GeneralSettingsTabView: View {
             ) {
                 HStack {
                     Defaults.Toggle(
-                        " " + String(format: NSLocalizedString("settings_general_menu_bar_show_icon", comment: "Icon in menu bar toggle")),
+                        " " + String(localized: "settings_general_menu_bar_show_icon"),
                         key: .menuBarShowIcon
                     )
                     .onChange { isOn in
@@ -81,7 +78,7 @@ struct GeneralSettingsTabView: View {
             ) {
                 HStack {
                     Defaults.Toggle(
-                        " " + String(format: NSLocalizedString("settings_general_menu_bar_show_dynamic_icon", comment: "Dynamic icon in menu bar toggle")),
+                        " " + String(localized: "settings_general_menu_bar_show_dynamic_icon"),
                         key: .menuBarShowDynamicIcon
                     )
                     .disabled(!self.menuBarShowIcon)
@@ -100,7 +97,7 @@ struct GeneralSettingsTabView: View {
                 divider: true
             ) {
                 Defaults.Toggle(
-                    " " + String(format: NSLocalizedString("settings_general_menu_bar_hide_dock", comment: "Hide dock icon toggle")),
+                    " " + String(localized: "settings_general_menu_bar_hide_dock"),
                     key: .menuBarHideDock
                 )
                 .onChange { _ in
@@ -114,7 +111,7 @@ struct GeneralSettingsTabView: View {
                 divider: true
             ) {
                 Defaults.Toggle(
-                    " " + String(format: NSLocalizedString("settings_general_notify_on_start", comment: "Notify on auto clicker start toggle")),
+                    " " + String(localized: "settings_general_notify_on_start"),
                     key: .notifyOnStart
                 )
                 .onChange { isOn in
@@ -124,7 +121,7 @@ struct GeneralSettingsTabView: View {
                 }
 
                 Defaults.Toggle(
-                    " " + String(format: NSLocalizedString("settings_general_notify_on_finish", comment: "Notify on auto clicker finish toggle")),
+                    " " + String(localized: "settings_general_notify_on_finish"),
                     key: .notifyOnFinish
                 )
                 .onChange { isOn in
@@ -139,7 +136,7 @@ struct GeneralSettingsTabView: View {
                 help: "settings_window_stay_ontop_help"
             ) {
                 Defaults.Toggle(
-                    " " + String(format: NSLocalizedString("settings_window_stay_ontop", comment: "Settings Window window should stay on top toggle")),
+                    " " + String(localized: "settings_window_stay_ontop"),
                     key: .windowShouldKeepOnTop
                 )
                 .onChange { isOn in

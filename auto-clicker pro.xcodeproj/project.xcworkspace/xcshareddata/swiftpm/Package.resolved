@@ -1,15 +1,6 @@
 {
-  "originHash" : "7690a33e035d828486bc43f9e3fae83e3d0f677c2b4915c6e00ad39ef5dfb4a8",
+  "originHash" : "b33721770587ab0652298356c4531b4437e281b998d69305a93120aca9909be2",
   "pins" : [
-    {
-      "identity" : "datestrings",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/othyn/DateStrings",
-      "state" : {
-        "revision" : "f62aa72a623caa85d0b7ec4f5199d3d61708bf3a",
-        "version" : "1.0.1"
-      }
-    },
     {
       "identity" : "defaults",
       "kind" : "remoteSourceControl",

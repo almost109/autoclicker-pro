@@ -14,7 +14,6 @@ struct Input: Codable, Defaults.Serializable {
     var keyCode: UInt16
     var modifiers: [Modifier] = []
     var isMouseInput: Bool
-    var isRepeat: Bool
 
     enum Modifier: String, Codable {
         case command = "⌘",
@@ -31,7 +30,6 @@ extension Input {
         self.keyCode = 0
         self.modifiers = []
         self.isMouseInput = true
-        self.isRepeat = false
     }
 }
 
@@ -42,7 +40,6 @@ extension Input {
         self.isMouseInput = event.isMouseInput
 
         self.keyCode = event.isMouseInput ? 0 : event.keyCode
-        self.isRepeat = event.isMouseInput ? false : event.isARepeat
 
         guard !event.isMouseInput else {
             return

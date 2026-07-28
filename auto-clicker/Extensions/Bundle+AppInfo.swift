@@ -8,16 +8,14 @@
 import Foundation
 
 extension Bundle {
-    public var appName: String { getInfo("CFBundleName")  }
-    public var displayName: String { getInfo("CFBundleDisplayName") }
-    public var identifier: String { getInfo("CFBundleIdentifier") }
-    public var copyright: String { getInfo("NSHumanReadableCopyright") }
+    var appName: String { self.info("CFBundleName") }
+    var displayName: String { self.info("CFBundleDisplayName") }
+    var copyright: String { self.info("NSHumanReadableCopyright") }
 
-    public var appBuild: String { getInfo("CFBundleVersion") }
-    public var appVersionLong: String { getInfo("CFBundleShortVersionString") }
-    public var appVersionShort: String { getInfo("CFBundleShortVersion") }
+    var appBuild: String { self.info("CFBundleVersion") }
+    var appVersionLong: String { self.info("CFBundleShortVersionString") }
 
-    public var language: String { getInfo("CFBundleDevelopmentRegion") }
-
-    fileprivate func getInfo(_ str: String) -> String { infoDictionary?[str] as? String ?? "N/A" }
+    private func info(_ key: String) -> String {
+        self.infoDictionary?[key] as? String ?? "N/A"
+    }
 }

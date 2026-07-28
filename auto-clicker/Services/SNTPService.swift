@@ -89,7 +89,7 @@ final class SNTPService: ObservableObject {
             self.synchronizationTimer = nil
 
             if let activeRequest = self.activeRequest {
-                self.cancel(activeRequest)
+                self.finish(activeRequest)
             }
 
             self.isSynchronizationInProgress = false
@@ -98,7 +98,14 @@ final class SNTPService: ObservableObject {
     }
 
     func currentNetworkTime() -> Date {
-        Date().addingTimeInterval(self.currentOffset())
+        Date(
+            timeIntervalSinceReferenceDate: self.currentNetworkTimestamp()
+        )
+    }
+
+    /// Returns the synchronized application clock without allocating a `Date`.
+    func currentNetworkTimestamp() -> TimeInterval {
+        Date.timeIntervalSinceReferenceDate + self.currentOffset()
     }
 
     func currentOffset() -> TimeInterval {
@@ -266,7 +273,7 @@ final class SNTPService: ObservableObject {
 
     private func finish(
         _ request: RequestContext,
-        with result: Result<Measurement, Error>
+        with result: Result<Measurement, Error>? = nil
     ) {
         guard !request.isComplete else {
             return
@@ -282,22 +289,8 @@ final class SNTPService: ObservableObject {
             self.activeRequest = nil
         }
 
-        request.completion(result)
-    }
-
-    private func cancel(_ request: RequestContext) {
-        guard !request.isComplete else {
-            return
-        }
-
-        request.isComplete = true
-        request.timeout?.cancel()
-        request.timeout = nil
-        request.connection.stateUpdateHandler = nil
-        request.connection.cancel()
-
-        if self.activeRequest === request {
-            self.activeRequest = nil
+        if let result {
+            request.completion(result)
         }
     }
 
@@ -429,7 +422,7 @@ final class SNTPService: ObservableObject {
     }
 }
 
-private extension TimeSynchronizationSnapshot {
+extension TimeSynchronizationSnapshot {
     var hasUsableOffset: Bool {
         guard self.lastSynchronizedTime != nil else {
             return false

@@ -12,7 +12,7 @@ struct ACWindow: View {
 
     var body: some View {
         ZStack {
-            Color(red: 244 / 255, green: 239 / 255, blue: 227 / 255)
+            Color.autoClickerBackground
                 .ignoresSafeArea()
 
             if self.permissionsService.isTrusted {

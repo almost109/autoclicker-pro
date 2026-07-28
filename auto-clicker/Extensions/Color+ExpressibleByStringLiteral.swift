@@ -7,7 +7,6 @@
 
 // Required to use Color as an Enum type in Colour
 
-import Foundation
 import SwiftUI
 
 extension Color: @retroactive ExpressibleByStringLiteral {

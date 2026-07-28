@@ -8,7 +8,7 @@
 import SwiftUI
 import Carbon.HIToolbox
 
-private var specialKeyMapping: [Int: String] = [
+private let specialKeyMapping: [Int: String] = [
     kVK_Return: "↩",
     kVK_Delete: "⌫",
     kVK_End: "↘",
@@ -47,7 +47,7 @@ private var specialKeyMapping: [Int: String] = [
 
 private let unknownCharacterString = "unknown"
 
-private func translateKey(event: NSEvent) -> String {
+private func translateKey(_ event: NSEvent) -> String {
     if let character = specialKeyMapping[Int(event.keyCode)] {
         return character
     }
@@ -69,14 +69,14 @@ extension NSEvent {
             return NSLocalizedString("middle_mouse_click", comment: "Middle mouse button click")
         case .keyDown,
              .keyUp:
-            return translateKey(event: self)
+            return translateKey(self)
         default:
             return unknownCharacterString
         }
     }
 }
 
-private let mouseTypes: [NSEvent.EventType] = [
+private let mouseTypes: Set<NSEvent.EventType> = [
     .leftMouseDown,
     .leftMouseUp,
     .rightMouseDown,

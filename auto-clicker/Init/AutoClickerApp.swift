@@ -5,9 +5,7 @@
 //  Created by Ben Tindall on 12/05/2021.
 //
 
-import Foundation
 import SwiftUI
-import Defaults
 
 @main
 struct AutoClickerApp: App {

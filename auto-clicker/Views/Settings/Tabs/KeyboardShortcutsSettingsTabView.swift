@@ -20,7 +20,7 @@ struct KeyboardShortcutsSettingsTabView: View {
                 divider: true
             ) {
                 KeyboardShortcuts.Recorder(
-                    String(format: NSLocalizedString("settings_keyboard_shortcuts_start", comment: "Settings Keyboard Shortcut to Start the auto clicker")),
+                    String(localized: "settings_keyboard_shortcuts_start"),
                     name: .pressStartButton,
                     onChange: { _ in
                         MenuBarService.refreshState()
@@ -28,7 +28,7 @@ struct KeyboardShortcutsSettingsTabView: View {
                 )
 
                 KeyboardShortcuts.Recorder(
-                    String(format: NSLocalizedString("settings_keyboard_shortcuts_stop", comment: "Settings Keyboard Shortcut to Stop the auto clicker")),
+                    String(localized: "settings_keyboard_shortcuts_stop"),
                     name: .pressStopButton,
                     onChange: { _ in
                         MenuBarService.refreshState()
@@ -41,12 +41,12 @@ struct KeyboardShortcutsSettingsTabView: View {
                 help: "settings_mouse_movement_help"
             ) {
                 Defaults.Toggle(
-                    " " + String(format: NSLocalizedString("settings_mouse_movement_start_on_move", comment: "Start auto clicker when mouse moves toggle")),
+                    " " + String(localized: "settings_mouse_movement_start_on_move"),
                     key: .mouseStartOnMove
                 )
 
                 Defaults.Toggle(
-                    " " + String(format: NSLocalizedString("settings_mouse_movement_stop_on_move", comment: "Stop auto clicker when mouse moves toggle")),
+                    " " + String(localized: "settings_mouse_movement_stop_on_move"),
                     key: .mouseStopOnMove
                 )
             }

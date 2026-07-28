@@ -7,8 +7,6 @@
 
 // swiftlint:disable identifier_name
 
-import Foundation
-
 // MARK: - Press Interval
 
 let MIN_PRESS_INTERVAL: Int = 1

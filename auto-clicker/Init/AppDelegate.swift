@@ -5,7 +5,6 @@
 //  Created by Ben Tindall on 30/03/2022.
 //
 
-import Foundation
 import Cocoa
 import Defaults
 import SwiftUI
@@ -23,9 +22,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         NSApp.activate(ignoringOtherApps: true)
 
-        // Hacky workaround in SwiftUI in order to have macOS persist the window size state
-        // https://stackoverflow.com/a/72558375/4494375
-        NSApp.windows[0].delegate = self
+        NSApp.windows.first?.delegate = self
 
         MenuBarService.refreshState()
 
@@ -51,19 +48,17 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
 
     func applicationDidHide(_ notification: Notification) {
-        if let hideOrShowMenuItem = MenuBarService.hideOrShowMenuItem {
-            hideOrShowMenuItem.title = NSLocalizedString("menu_bar_item_hide_show_show", comment: "Menu bar item show option")
-                + " "
-                + NSLocalizedString("menu_bar_item_hide_show_suffix", comment: "Menu bar item show/hide option suffix")
-        }
+        self.updateHideOrShowMenuItem(
+            titleKey: "menu_bar_item_hide_show_show",
+            comment: "Menu bar item show option"
+        )
     }
 
     func applicationDidUnhide(_ notification: Notification) {
-        if let hideOrShowMenuItem = MenuBarService.hideOrShowMenuItem {
-            hideOrShowMenuItem.title = NSLocalizedString("menu_bar_item_hide_show_hide", comment: "Menu bar item hide option")
-                + " "
-                + NSLocalizedString("menu_bar_item_hide_show_suffix", comment: "Menu bar item show/hide option suffix")
-        }
+        self.updateHideOrShowMenuItem(
+            titleKey: "menu_bar_item_hide_show_hide",
+            comment: "Menu bar item hide option"
+        )
     }
 
     // Hacky workaround in SwiftUI in order to have macOS persist the window size state
@@ -101,5 +96,18 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         }
 
         aboutWindowController?.showWindow(aboutWindowController?.window)
+    }
+
+    private func updateHideOrShowMenuItem(
+        titleKey: String,
+        comment: String
+    ) {
+        MenuBarService.hideOrShowMenuItem?.title = [
+            NSLocalizedString(titleKey, comment: comment),
+            NSLocalizedString(
+                "menu_bar_item_hide_show_suffix",
+                comment: "Menu bar item show/hide option suffix"
+            )
+        ].joined(separator: " ")
     }
 }

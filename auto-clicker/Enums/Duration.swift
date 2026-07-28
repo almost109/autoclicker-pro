@@ -26,32 +26,16 @@ enum Duration: String, CustomStringConvertible, CaseIterable, Identifiable, Coda
         LocalizedStringKey(self.description)
     }
 
-    var textView: some View {
-        switch self {
-        case .milliseconds, .seconds, .minutes, .hours:
-            return Text(self.description)
-        }
-    }
-
-    func buttonView(action: @escaping () -> Void) -> some View {
-        switch self {
-        case .milliseconds, .seconds, .minutes, .hours:
-                return Button(action: action) {
-                    Text(self.localised, comment: "Duration option buttons")
-                }
-        }
-    }
-
     func asTimeInterval(interval: Int) -> TimeInterval {
         switch self {
         case .milliseconds:
-            return TimeInterval(Double(interval) / 1_000)
+            return TimeInterval(interval) / 1_000
         case .seconds:
-            return TimeInterval(Double(interval))
+            return TimeInterval(interval)
         case .minutes:
-            return TimeInterval(Double(interval) * 60)
+            return TimeInterval(interval) * 60
         case .hours:
-            return TimeInterval(Double(interval) * 60 * 60)
+            return TimeInterval(interval) * 60 * 60
         }
     }
 }

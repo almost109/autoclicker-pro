@@ -22,16 +22,6 @@ struct MainView: View {
         return formatter
     }()
 
-    private let backgroundColor = Color(red: 244 / 255, green: 239 / 255, blue: 227 / 255)
-    private let panelColor = Color(red: 251 / 255, green: 247 / 255, blue: 236 / 255)
-    private let inkColor = Color(red: 33 / 255, green: 28 / 255, blue: 21 / 255)
-    private let bodyTextColor = Color(red: 58 / 255, green: 50 / 255, blue: 38 / 255)
-    private let mutedInkColor = Color(red: 107 / 255, green: 93 / 255, blue: 70 / 255)
-    private let orangeColor = Color(red: 193 / 255, green: 68 / 255, blue: 14 / 255)
-    private let ochreColor = Color(red: 217 / 255, green: 164 / 255, blue: 65 / 255)
-    private let blueColor = Color(red: 60 / 255, green: 110 / 255, blue: 165 / 255)
-    private let greenColor = Color(red: 129 / 255, green: 157 / 255, blue: 104 / 255)
-
     private var hasStarted: Bool {
         self.autoClickSimulator.isAutoClicking || self.delayTimer.isCountingDown
     }
@@ -131,13 +121,13 @@ struct MainView: View {
     private var synchronizationStatus: (LocalizedStringKey, Color) {
         switch self.sntpService.synchronization.status {
         case .idle:
-            return ("network_time_status_offline", self.mutedInkColor)
+            return ("network_time_status_offline", .autoClickerSecondaryText)
         case .synchronizing:
-            return ("network_time_status_synchronizing", self.ochreColor)
+            return ("network_time_status_synchronizing", .autoClickerOchre)
         case .synchronized:
-            return ("network_time_status_synchronized", self.greenColor)
+            return ("network_time_status_synchronized", .autoClickerSynchronizationGreen)
         case .failed:
-            return ("network_time_status_failed", self.orangeColor)
+            return ("network_time_status_failed", .autoClickerPrimary)
         }
     }
 
@@ -173,7 +163,7 @@ struct MainView: View {
 
             self.clickSettingsSection
 
-            MockupDivider(color: self.mutedInkColor.opacity(0.35))
+            MockupDivider(color: Color.autoClickerSecondaryText.opacity(0.35))
                 .padding(.vertical, 12)
 
             self.startModeSection
@@ -189,29 +179,29 @@ struct MainView: View {
         .frame(maxWidth: 620)
         .background(
             RoundedRectangle(cornerRadius: 22)
-                .fill(self.panelColor)
-                .shadow(color: self.inkColor.opacity(0.14), radius: 10, x: 5, y: 7)
+                .fill(Color.autoClickerPanel)
+                .shadow(color: Color.autoClickerInk.opacity(0.14), radius: 10, x: 5, y: 7)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 22)
-                .stroke(self.inkColor, lineWidth: 2)
+                .stroke(Color.autoClickerInk, lineWidth: 2)
         )
         .padding(14)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(self.painterlyBackground.ignoresSafeArea())
-        .foregroundColor(self.bodyTextColor)
+        .foregroundColor(.autoClickerBodyText)
         .onAppear(perform: self.registerKeyboardShortcuts)
     }
 
     private var painterlyBackground: some View {
         ZStack {
-            self.backgroundColor
+            Color.autoClickerBackground
 
             LinearGradient(
                 colors: [
-                    self.blueColor.opacity(0.10),
-                    self.backgroundColor.opacity(0.18),
-                    self.orangeColor.opacity(0.07)
+                    Color.autoClickerBlue.opacity(0.10),
+                    Color.autoClickerBackground.opacity(0.18),
+                    Color.autoClickerPrimary.opacity(0.07)
                 ],
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
@@ -220,7 +210,7 @@ struct MainView: View {
             LinearGradient(
                 colors: [
                     .clear,
-                    self.greenColor.opacity(0.08)
+                    Color.autoClickerSynchronizationGreen.opacity(0.08)
                 ],
                 startPoint: .center,
                 endPoint: .bottomTrailing
@@ -234,11 +224,11 @@ struct MainView: View {
                 Text(Bundle.main.displayName)
                     .font(.system(size: 23, weight: .medium, design: .serif))
                     .italic()
-                    .foregroundColor(self.inkColor)
+                    .foregroundColor(.autoClickerInk)
 
                 Text("main_window_tagline")
                     .font(.system(size: 13, design: .serif))
-                    .foregroundColor(self.mutedInkColor)
+                    .foregroundColor(.autoClickerSecondaryText)
             }
 
             Spacer(minLength: 12)
@@ -260,7 +250,7 @@ struct MainView: View {
         VStack(alignment: .leading, spacing: 10) {
             MockupSectionTitle(
                 title: "main_window_click_settings",
-                color: self.orangeColor
+                color: .autoClickerPrimary
             )
 
             self.clickIntervalRow
@@ -285,7 +275,7 @@ struct MainView: View {
                             : LocalizedStringKey("main_window_clicks")
                     )
                         .font(.system(size: 13, design: .serif))
-                        .foregroundColor(self.mutedInkColor)
+                        .foregroundColor(.autoClickerSecondaryText)
                 }
             }
 
@@ -308,13 +298,13 @@ struct MainView: View {
                         )
                             .font(.system(size: 14, design: .serif))
                             .italic()
-                            .foregroundColor(self.mutedInkColor)
+                            .foregroundColor(.autoClickerSecondaryText)
                     }
 
                     Text(self.estimatedDurationText)
                         .font(.system(size: 14, weight: .medium, design: .serif))
                         .italic()
-                        .foregroundColor(self.mutedInkColor)
+                        .foregroundColor(.autoClickerSecondaryText)
                 }
             }
         }
@@ -365,7 +355,7 @@ struct MainView: View {
                 Text(self.clickRateText)
                     .font(.system(size: 14, weight: .medium, design: .serif))
                     .italic()
-                    .foregroundColor(self.mutedInkColor)
+                    .foregroundColor(.autoClickerSecondaryText)
             }
         }
         .disabled(self.hasStarted)
@@ -375,14 +365,14 @@ struct MainView: View {
         VStack(alignment: .leading, spacing: 10) {
             MockupSectionTitle(
                 title: "main_window_start_mode",
-                color: self.blueColor
+                color: .autoClickerBlue
             )
 
             HStack(spacing: 8) {
                 StartModeOptionButton(
                     title: "main_window_start_mode_delay",
                     isSelected: self.formState.startMode == .delay,
-                    selectedColor: self.ochreColor
+                    selectedColor: .autoClickerOchre
                 ) {
                     self.formState.startMode = .delay
                 }
@@ -390,7 +380,7 @@ struct MainView: View {
                 StartModeOptionButton(
                     title: "main_window_start_mode_target_time",
                     isSelected: self.formState.startMode == .targetTime,
-                    selectedColor: self.ochreColor
+                    selectedColor: .autoClickerOchre
                 ) {
                     self.formState.startMode = .targetTime
                 }
@@ -447,8 +437,8 @@ struct MainView: View {
                 }
                 .buttonStyle(MockupActionButtonStyle(
                     isPrimary: true,
-                    primaryColor: self.orangeColor,
-                    inkColor: self.inkColor
+                    primaryColor: .autoClickerPrimary,
+                    inkColor: .autoClickerInk
                 ))
                 .disabled(
                     self.hasStarted
@@ -482,8 +472,8 @@ struct MainView: View {
                 }
                 .buttonStyle(MockupActionButtonStyle(
                     isPrimary: false,
-                    primaryColor: self.orangeColor,
-                    inkColor: self.inkColor
+                    primaryColor: .autoClickerPrimary,
+                    inkColor: .autoClickerInk
                 ))
                 .disabled(self.hasStopped)
                 .accessibilityLabel("main_window_stop_btn")
@@ -493,7 +483,7 @@ struct MainView: View {
             Text("main_window_start_caption")
                 .font(.system(size: 13, design: .serif))
                 .italic()
-                .foregroundColor(self.mutedInkColor)
+                .foregroundColor(.autoClickerSecondaryText)
                 .multilineTextAlignment(.center)
                 .frame(maxWidth: .infinity)
         }
@@ -524,11 +514,11 @@ struct MainView: View {
         .padding(.horizontal, 4)
         .background(
             RoundedRectangle(cornerRadius: 10)
-                .fill(self.panelColor)
+                .fill(Color.autoClickerPanel)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 10)
-                .stroke(self.inkColor, lineWidth: 1.5)
+                .stroke(Color.autoClickerInk, lineWidth: 1.5)
         )
     }
 }
@@ -586,13 +576,10 @@ private struct StartModeOptionButton: View {
     let action: () -> Void
 
     var body: some View {
-        let inkColor = Color(red: 33 / 255, green: 28 / 255, blue: 21 / 255)
-        let panelColor = Color(red: 251 / 255, green: 247 / 255, blue: 236 / 255)
-
         Button(action: self.action) {
             Text(self.title)
                 .font(.system(size: 15, weight: .medium, design: .serif))
-                .foregroundColor(inkColor)
+                .foregroundColor(.autoClickerInk)
                 .frame(maxWidth: .infinity)
                 .frame(height: 32)
                 .contentShape(Rectangle())
@@ -600,11 +587,11 @@ private struct StartModeOptionButton: View {
         .buttonStyle(.plain)
         .background(
             RoundedRectangle(cornerRadius: 8)
-                .fill(self.isSelected ? self.selectedColor : panelColor)
+                .fill(self.isSelected ? self.selectedColor : .autoClickerPanel)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 8)
-                .stroke(inkColor, lineWidth: 2)
+                .stroke(Color.autoClickerInk, lineWidth: 2)
         )
         .accessibilityAddTraits(self.isSelected ? .isSelected : [])
     }
@@ -618,15 +605,13 @@ struct MockupActionButtonStyle: ButtonStyle {
     let inkColor: Color
 
     func makeBody(configuration: Configuration) -> some View {
-        let panelColor = Color(red: 251 / 255, green: 247 / 255, blue: 236 / 255)
-
         configuration.label
-            .foregroundColor(self.isPrimary ? panelColor : self.inkColor)
+            .foregroundColor(self.isPrimary ? .autoClickerPanel : self.inkColor)
             .padding(.vertical, 13)
             .padding(.horizontal, 14)
             .background(
                 RoundedRectangle(cornerRadius: 10)
-                    .fill(self.isPrimary ? self.primaryColor : panelColor)
+                    .fill(self.isPrimary ? self.primaryColor : .autoClickerPanel)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
@@ -648,20 +633,17 @@ private struct CompactNumberField: View {
     @FocusState private var isFocused: Bool
 
     var body: some View {
-        let panelColor = Color(red: 251 / 255, green: 247 / 255, blue: 236 / 255)
-        let inkColor = Color(red: 33 / 255, green: 28 / 255, blue: 21 / 255)
-
         TextField("", text: self.$draft)
             .textFieldStyle(.plain)
             .font(.system(size: 15, design: .monospaced))
             .multilineTextAlignment(.center)
             .padding(.horizontal, 8)
             .frame(height: 32)
-            .foregroundColor(inkColor)
-            .background(panelColor)
+            .foregroundColor(.autoClickerInk)
+            .background(Color.autoClickerPanel)
             .overlay(
                 RoundedRectangle(cornerRadius: 7)
-                    .stroke(inkColor, lineWidth: 2)
+                    .stroke(Color.autoClickerInk, lineWidth: 2)
             )
             .focused(self.$isFocused)
             .onAppear {
@@ -749,9 +731,6 @@ private struct TargetTimeFields: View {
         maximum: Int,
         accessibilityLabel: LocalizedStringKey
     ) -> some View {
-        let panelColor = Color(red: 251 / 255, green: 247 / 255, blue: 236 / 255)
-        let inkColor = Color(red: 33 / 255, green: 28 / 255, blue: 21 / 255)
-
         return TextField(
             "",
             text: Binding(
@@ -772,11 +751,11 @@ private struct TargetTimeFields: View {
         .multilineTextAlignment(.center)
         .padding(.horizontal, 5)
         .frame(width: 46, height: 32)
-        .foregroundColor(inkColor)
-        .background(panelColor)
+        .foregroundColor(.autoClickerInk)
+        .background(Color.autoClickerPanel)
         .overlay(
             RoundedRectangle(cornerRadius: 7)
-                .stroke(inkColor, lineWidth: 2)
+                .stroke(Color.autoClickerInk, lineWidth: 2)
         )
         .accessibilityLabel(accessibilityLabel)
         .accessibilityValue(self.components[index])
@@ -819,7 +798,7 @@ private struct SummaryTile: View {
             Text(self.title)
                 .font(.system(size: 12, weight: .medium, design: .serif))
                 .italic()
-                .foregroundColor(Color(red: 107 / 255, green: 93 / 255, blue: 70 / 255))
+                .foregroundColor(.autoClickerSecondaryText)
                 .multilineTextAlignment(.center)
 
             Text(self.value)
@@ -834,7 +813,7 @@ private struct SummaryTile: View {
 private struct SummaryDivider: View {
     var body: some View {
         Rectangle()
-            .fill(Color(red: 107 / 255, green: 93 / 255, blue: 70 / 255).opacity(0.28))
+            .fill(Color.autoClickerSecondaryText.opacity(0.28))
             .frame(width: 1, height: 32)
     }
 }

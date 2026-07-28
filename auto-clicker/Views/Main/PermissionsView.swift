@@ -11,16 +11,6 @@ import SwiftUI
 struct PermissionsView: View {
     @ObservedObject private var permissionsService = PermissionsService.shared
 
-    private let backgroundColor = Color(red: 244 / 255, green: 239 / 255, blue: 227 / 255)
-    private let panelColor = Color(red: 251 / 255, green: 247 / 255, blue: 236 / 255)
-    private let inkColor = Color(red: 33 / 255, green: 28 / 255, blue: 21 / 255)
-    private let bodyTextColor = Color(red: 58 / 255, green: 50 / 255, blue: 38 / 255)
-    private let secondaryTextColor = Color(red: 107 / 255, green: 93 / 255, blue: 70 / 255)
-    private let primaryColor = Color(red: 193 / 255, green: 68 / 255, blue: 14 / 255)
-    private let amberColor = Color(red: 217 / 255, green: 164 / 255, blue: 65 / 255)
-    private let blueColor = Color(red: 60 / 255, green: 110 / 255, blue: 165 / 255)
-    private let grantedColor = Color(red: 129 / 255, green: 157 / 255, blue: 104 / 255)
-
     var body: some View {
         ZStack {
             self.painterlyBackground
@@ -30,18 +20,18 @@ struct PermissionsView: View {
                 VStack(spacing: 8) {
                     Text("permissions_help_title")
                         .font(.system(size: 24, weight: .semibold, design: .serif))
-                        .foregroundColor(self.inkColor)
+                        .foregroundColor(.autoClickerInk)
 
                     Text("permissions_help_first_paragraph")
                         .font(.system(size: 15, design: .serif))
-                        .foregroundColor(self.bodyTextColor)
+                        .foregroundColor(.autoClickerBodyText)
                         .multilineTextAlignment(.center)
                         .fixedSize(horizontal: false, vertical: true)
                 }
 
                 Text("permissions_help_second_paragraph")
                     .font(.system(size: 14, design: .serif))
-                    .foregroundColor(self.secondaryTextColor)
+                    .foregroundColor(.autoClickerSecondaryText)
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
 
@@ -56,8 +46,8 @@ struct PermissionsView: View {
                     .buttonStyle(
                         MockupActionButtonStyle(
                             isPrimary: true,
-                            primaryColor: self.primaryColor,
-                            inkColor: self.inkColor
+                            primaryColor: .autoClickerPrimary,
+                            inkColor: .autoClickerInk
                         )
                     )
 
@@ -69,8 +59,8 @@ struct PermissionsView: View {
                     .buttonStyle(
                         MockupActionButtonStyle(
                             isPrimary: false,
-                            primaryColor: self.primaryColor,
-                            inkColor: self.inkColor
+                            primaryColor: .autoClickerPrimary,
+                            inkColor: .autoClickerInk
                         )
                     )
                 }
@@ -80,12 +70,12 @@ struct PermissionsView: View {
             .frame(maxWidth: 540)
             .background(
                 RoundedRectangle(cornerRadius: 18)
-                    .fill(self.panelColor)
-                    .shadow(color: self.inkColor.opacity(0.14), radius: 10, x: 5, y: 7)
+                    .fill(Color.autoClickerPanel)
+                    .shadow(color: Color.autoClickerInk.opacity(0.14), radius: 10, x: 5, y: 7)
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 18)
-                    .stroke(self.inkColor, lineWidth: 1.5)
+                    .stroke(Color.autoClickerInk, lineWidth: 1.5)
             )
             .padding(24)
         }
@@ -105,31 +95,31 @@ struct PermissionsView: View {
         }
         .foregroundColor(
             self.permissionsService.isTrusted
-                ? self.grantedColor
-                : self.amberColor
+                ? .autoClickerSynchronizationGreen
+                : .autoClickerOchre
         )
         .padding(.horizontal, 16)
         .frame(height: 36)
         .background(
             RoundedRectangle(cornerRadius: 8)
-                .fill(self.backgroundColor.opacity(0.72))
+                .fill(Color.autoClickerBackground.opacity(0.72))
         )
         .overlay(
             RoundedRectangle(cornerRadius: 8)
-                .stroke(self.inkColor.opacity(0.45), lineWidth: 1)
+                .stroke(Color.autoClickerInk.opacity(0.45), lineWidth: 1)
         )
         .accessibilityElement(children: .combine)
     }
 
     private var painterlyBackground: some View {
         ZStack {
-            self.backgroundColor
+            Color.autoClickerBackground
 
             LinearGradient(
                 colors: [
-                    self.blueColor.opacity(0.10),
-                    self.backgroundColor.opacity(0.18),
-                    self.primaryColor.opacity(0.07)
+                    Color.autoClickerBlue.opacity(0.10),
+                    Color.autoClickerBackground.opacity(0.18),
+                    Color.autoClickerPrimary.opacity(0.07)
                 ],
                 startPoint: .topLeading,
                 endPoint: .bottomTrailing
@@ -138,7 +128,7 @@ struct PermissionsView: View {
             LinearGradient(
                 colors: [
                     .clear,
-                    self.grantedColor.opacity(0.08)
+                    Color.autoClickerSynchronizationGreen.opacity(0.08)
                 ],
                 startPoint: .center,
                 endPoint: .bottomTrailing

@@ -6,21 +6,9 @@
 //
 
 import SwiftUI
-import Defaults
 
 struct SettingsView: View {
-    @Default(.appearanceSelectedTheme) private var activeTheme
-
     @State private var frameHeight: CGFloat = 100
-
-    // Its easier to just set the .frame(height:) on each view, but I wanted to mimic the nice
-    //  transition effect Apple have in their Work suite, but it appears SwiftUI doesn't animate
-    //  the underlying NSHostingView frame size changes.
-    private func changeFrameHeight(_ newHeight: CGFloat) {
-//        withAnimation {
-            self.frameHeight = newHeight
-//        }
-    }
 
     var body: some View {
         TabView {
@@ -29,7 +17,7 @@ struct SettingsView: View {
                     Label("settings_general", systemImage: "gear")
                 }
                 .onAppear {
-                    self.changeFrameHeight(700)
+                    self.frameHeight = 700
                 }
 
             KeyboardShortcutsSettingsTabView()
@@ -37,7 +25,7 @@ struct SettingsView: View {
                     Label("settings_shortcuts", systemImage: "keyboard")
                 }
                 .onAppear {
-                    self.changeFrameHeight(350)
+                    self.frameHeight = 350
                 }
 
             AppearanceSettingsTabView()
@@ -45,18 +33,10 @@ struct SettingsView: View {
                     Label("settings_appearance", systemImage: "paintpalette")
                 }
                 .onAppear {
-                    self.changeFrameHeight(250)
+                    self.frameHeight = 250
                 }
         }
         .frame(width: WindowStateService.settingsMinWidth, height: self.frameHeight)
         .padding()
-        // Would love to theme the tab bar, but I can only find information on iOS and UITabBar
-        // with NSTabView not having that much information on how to do this...
     }
 }
-
-// struct SettingsView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        SettingsView()
-//    }
-// }

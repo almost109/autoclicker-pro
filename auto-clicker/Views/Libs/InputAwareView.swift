@@ -33,31 +33,24 @@ private class InputView: NSView {
 
     override var acceptsFirstResponder: Bool { true }
 
-    // left mouse down
     override func mouseDown(with event: NSEvent) {
-        LoggerService.pressInputEvent(event: event)
-
-        self.onPress(Input(event))
+        self.handle(event)
     }
 
-    // right mouse down
     override func rightMouseDown(with event: NSEvent) {
-        LoggerService.pressInputEvent(event: event)
-
-        self.onPress(Input(event))
+        self.handle(event)
     }
 
-    // other mouse down
     override func otherMouseDown(with event: NSEvent) {
-        LoggerService.pressInputEvent(event: event)
-
-        self.onPress(Input(event))
+        self.handle(event)
     }
 
-    // any keyboard key down
     override func keyDown(with event: NSEvent) {
-        LoggerService.pressInputEvent(event: event)
+        self.handle(event)
+    }
 
+    private func handle(_ event: NSEvent) {
+        LoggerService.pressInputEvent(event: event)
         self.onPress(Input(event))
     }
 }

@@ -50,12 +50,10 @@ final class ThemeService: Codable, Defaults.Serializable {
     }
 
     func randomise() {
-        var newColour: Colour
-
-        repeat {
-            newColour = Colour.allCases.randomElement()!
-        } while newColour == self.currentColour
-
+        let alternatives = Colour.allCases.filter { $0 != self.currentColour }
+        guard let newColour = alternatives.randomElement() else {
+            return
+        }
         self.currentColour = newColour
     }
 }

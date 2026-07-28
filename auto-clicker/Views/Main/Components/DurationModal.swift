@@ -31,14 +31,14 @@ struct DurationModal: View {
                     RoundedRectangle(cornerRadius: 6)
                         .fill(
                             unit == self.selected
-                                ? Color(red: 217 / 255, green: 164 / 255, blue: 65 / 255).opacity(0.38)
+                                ? Color.autoClickerOchre.opacity(0.38)
                                 : .clear
                         )
                 )
             }
 
             Divider()
-                .overlay(Color(red: 107 / 255, green: 93 / 255, blue: 70 / 255).opacity(0.35))
+                .overlay(Color.autoClickerSecondaryText.opacity(0.35))
                 .padding(.vertical, 2)
 
             Button("duration_modal_cancel_button") {
@@ -46,23 +46,23 @@ struct DurationModal: View {
             }
             .buttonStyle(.plain)
             .font(.system(size: 13, design: .serif))
-            .foregroundColor(Color(red: 107 / 255, green: 93 / 255, blue: 70 / 255))
+            .foregroundColor(.autoClickerSecondaryText)
             .frame(maxWidth: .infinity)
             .frame(height: 28)
         }
         .padding(8)
         .frame(width: 180)
-        .foregroundColor(Color(red: 33 / 255, green: 28 / 255, blue: 21 / 255))
+        .foregroundColor(.autoClickerInk)
         .background(
             RoundedRectangle(cornerRadius: 10)
-                .fill(Color(red: 251 / 255, green: 247 / 255, blue: 236 / 255))
+                .fill(Color.autoClickerPanel)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 10)
-                .stroke(Color(red: 33 / 255, green: 28 / 255, blue: 21 / 255), lineWidth: 1.5)
+                .stroke(Color.autoClickerInk, lineWidth: 1.5)
         )
         .shadow(
-            color: Color(red: 33 / 255, green: 28 / 255, blue: 21 / 255).opacity(0.16),
+            color: Color.autoClickerInk.opacity(0.16),
             radius: 8,
             x: 2,
             y: 4

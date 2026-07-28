@@ -5,9 +5,7 @@
 //  Created by Ben Tindall on 11/07/2022.
 //
 
-import Foundation
 import SwiftUI
-import Defaults
 
 enum Colour: ThemeColour, Identifiable, CaseIterable, Codable {
     case Black,

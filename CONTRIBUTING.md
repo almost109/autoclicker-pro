@@ -62,7 +62,7 @@ The main project branches are;
 
 This project supports localisation! Please use the [issue tracker](https://github.com/almost109/AutoClicker-Pro/issues) as a discussion place for new language support. See the [`auto-clicker/Localisation`](https://github.com/almost109/AutoClicker-Pro/tree/main/auto-clicker/Localisation) project directory to view currently supported languages, the project default being `en-GB`.
 
-The project makes use of the Apple default `Localizable.strings` and `Localizable.stringsdict` to support local translations. The short tutorial is;
+The project uses `Localizable.strings` to support local translations. The short tutorial is:
 
 0. Clone this project locally to somewhere on your machine.
 1. Open up the project **workspace** in Xcode.
