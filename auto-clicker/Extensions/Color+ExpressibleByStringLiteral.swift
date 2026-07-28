@@ -10,7 +10,7 @@
 import Foundation
 import SwiftUI
 
-extension Color: ExpressibleByStringLiteral {
+extension Color: @retroactive ExpressibleByStringLiteral {
     public init(stringLiteral value: String) {
         self.init(value)
     }

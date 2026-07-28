@@ -13,11 +13,20 @@ struct DurationSelector: View {
     @Binding var selectedDuration: Duration
 
     var body: some View {
-        Button(self.selectedDuration.localised) {
+        Button {
             self.showingDurationModal = true
+        } label: {
+            HStack(spacing: 8) {
+                Text(self.selectedDuration.localised)
+                    .lineLimit(1)
+
+                Image(systemName: "chevron.up.chevron.down")
+                    .font(.system(size: 9, weight: .medium))
+                    .accessibilityHidden(true)
+            }
         }
-        .buttonStyle(UnderlinedButtonStyle())
-        .sheet(isPresented: self.$showingDurationModal, content: {
+        .buttonStyle(CompactFormButtonStyle())
+        .popover(isPresented: self.$showingDurationModal, arrowEdge: .bottom, content: {
             DurationModal(selected: self.$selectedDuration)
         })
     }

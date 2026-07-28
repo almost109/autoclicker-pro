@@ -10,6 +10,8 @@ import Combine
 
 struct NumberField: View {
     var text: String
+    var accessibilityLabel: LocalizedStringKey
+    var accessibilityHint: LocalizedStringKey
     var min: Int
     var max: Int
 
@@ -49,6 +51,9 @@ struct NumberField: View {
     var body: some View {
         TextField(self.text, text: self.$rawString)
             .textFieldStyle(RoundedBorderTextFieldStyle())
+            .accessibilityLabel(self.accessibilityLabel)
+            .accessibilityValue(self.rawString)
+            .accessibilityHint(self.accessibilityHint)
             .onReceive(Just(self.rawString), perform: self.numericValidator)
             .onAppear(perform: {
                 self.rawString = String(self.number)

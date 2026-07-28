@@ -17,7 +17,7 @@ body:
     id: version
     attributes:
       label: Version
-      description: What version of the app are you running? (You can find this in the macOS Menu Bar with the app active > Auto Clicker > About Auto Clicker)
+      description: What version of the app are you running? (You can find this in the macOS Menu Bar with the app active > AutoClicker Pro > About AutoClicker Pro)
     validations:
       required: true
   - type: textarea

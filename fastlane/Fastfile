@@ -65,7 +65,7 @@ def build_and_zip(tag_prefix, is_beta, is_local)
     workspace: "auto-clicker.xcworkspace",
     clean: true,
     output_directory: "build",
-    output_name: "AutoClicker",
+    output_name: "AutoClicker Pro",
     export_method: "mac-application"
   )
 
@@ -101,9 +101,9 @@ def build_and_zip(tag_prefix, is_beta, is_local)
     # https://github.com/xotahal/fastlane-plugin-semantic_release
     notes = conventional_changelog(
       format: 'markdown',
-      title: 'macOS Auto Clicker',
+      title: 'AutoClicker Pro',
       display_title: false,
-      commit_url: 'https://github.com/othyn/macos-auto-clicker/commit',
+      commit_url: 'https://github.com/almost109/AutoClicker-Pro/commit',
       sections: {
         feat: ":star2: Features",
         fix: ":bug: Bug Fixes",
@@ -119,15 +119,15 @@ def build_and_zip(tag_prefix, is_beta, is_local)
 
   # https://docs.fastlane.tools/actions/zip
   output_archive_path = zip(
-    path: "build/AutoClicker.app",
-    output_path: "build/AutoClicker.zip",
+    path: "build/AutoClicker Pro.app",
+    output_path: "build/AutoClicker Pro.zip",
     verbose: true
   )
 
   # https://docs.fastlane.tools/actions/set_github_release/#set_github_release
   unless is_local
     set_github_release(
-      repository_name: "othyn/macos-auto-clicker",
+      repository_name: "almost109/AutoClicker-Pro",
       api_bearer: ENV["GITHUB_TOKEN"],
       name: "#{tag_prefix} #{lane_context[SharedValues::RELEASE_NEXT_VERSION]}#{is_beta ? " (#{lane_context[SharedValues::RELEASE_LAST_TAG_HASH]})" : ""}",
       tag_name: "#{is_beta ? "beta/" : ""}v#{lane_context[SharedValues::RELEASE_NEXT_VERSION]}#{is_beta ? "/#{lane_context[SharedValues::RELEASE_LAST_TAG_HASH]}" : ""}",
@@ -136,7 +136,7 @@ def build_and_zip(tag_prefix, is_beta, is_local)
       commitish: "main",
       upload_assets: [
         output_archive_path,
-        "build/AutoClicker.app.dSYM.zip"
+        "build/AutoClicker Pro.app.dSYM.zip"
       ]
     )
   end

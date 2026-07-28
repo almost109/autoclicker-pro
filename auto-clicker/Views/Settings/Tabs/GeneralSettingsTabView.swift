@@ -29,6 +29,8 @@ struct GeneralSettingsTabView: View {
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .frame(width: 120)
+                .accessibilityLabel("accessibility_click_interval_mode")
+                .accessibilityHint("accessibility_click_interval_mode_hint")
             }
 
             SettingsTabItemView(

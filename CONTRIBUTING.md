@@ -1,4 +1,4 @@
-# :mouse: Welcome to the macOS Auto Clicker app's contributing guide
+# :mouse: Welcome to the AutoClicker Pro contributing guide
 
 Thank you for taking the time to contribute to our project!
 
@@ -28,7 +28,7 @@ This so that issues can easily be broken down into who, what and why to best ass
 
 In reality though, any issue that is well presented and described should be fine. The semantics can be ironed out later!
 
-Assignees and Labels should be set appropriately. The Project should be set to 'macOS Auto Clicker'. The Milestone can be left blank if whats being developed is being developed as a standalone 'thing', however should the development be part of a larger bundle of 'things' (an [Epic](https://www.atlassian.com/agile/project-management/epics)), it should be set to the overarching theme of the development; for an example of this see the existing [Ease of Installation](https://github.com/othyn/macos-auto-clicker/milestone/9) or [Advanced Mode](https://github.com/othyn/macos-auto-clicker/milestone/8) project Milestones (Epics), in which they also have detailed descriptions on what they aim to accomplish. Feel free to make use of GitHub's 'Create a branch for this issue or link a pull request.' feature under the 'Development' section on the issue sidebar to quickly and easily create the required development branch for this issue, making sure to base it from the `dev` branch.
+Assignees and Labels should be set appropriately. The Project should be set to 'AutoClicker Pro'. The Milestone can be left blank if whats being developed is being developed as a standalone 'thing', however should the development be part of a larger bundle of 'things' (an [Epic](https://www.atlassian.com/agile/project-management/epics)), it should be set to the overarching theme of the development; for an example of this see the existing Ease of Installation or Advanced Mode project Milestones (Epics), in which they also have detailed descriptions on what they aim to accomplish. Feel free to make use of GitHub's 'Create a branch for this issue or link a pull request.' feature under the 'Development' section on the issue sidebar to quickly and easily create the required development branch for this issue, making sure to base it from the `dev` branch.
 
 # :gift: Project Setup
 
@@ -49,20 +49,20 @@ Code style is handled by `swiftlint` (`$ brew install swiftlint`) and should aut
 The main project branches are;
 
 - `main`
-  - Holds the 'source of truth' for the current (newest) release version detailed in the [releases page](https://github.com/othyn/macos-auto-clicker/releases).
+  - Holds the 'source of truth' for the current (newest) release version detailed in the [releases page](https://github.com/almost109/AutoClicker-Pro/releases).
   - The only branch that should be PR'd into `main` is `staging`.
   - The [GitHub Actions CI/CD workflow](.github/workflows/cicd.yml) will kick in when this branch is pushed to and kick off a new build and release (should one be deemed required, see the [Commit Strategy](#memo-commit-strategy) section below for more details).
 - `staging`
-  - Holds the 'source of truth' for the current beta release version detailed in the [releases page](https://github.com/othyn/macos-auto-clicker/releases).
+  - Holds the 'source of truth' for the current beta release version detailed in the [releases page](https://github.com/almost109/AutoClicker-Pro/releases).
   - The [GitHub Actions CI/CD workflow](.github/workflows/cicd.yml) will kick in when this branch is pushed to and kick off a new beta build and release (should one be deemed required, see the [Commit Strategy](#memo-commit-strategy) section below for more details)
 - `dev`
   - Any development against the project should reside in its own development branch using the `dev` branch as its base, later being PR'd back into `dev` when development is completed.
 
 # :speech_balloon: Localisation Strategy
 
-This project supports localisation! Please see the pinned [language support issue](https://github.com/othyn/macos-auto-clicker/issues/10) as a discussion place for new language support. See the [`auto-clicker/Localisation`](https://github.com/othyn/macos-auto-clicker/tree/main/auto-clicker/Localisation) project directory to view currently supported languages, the project default being `en-GB`.
+This project supports localisation! Please use the [issue tracker](https://github.com/almost109/AutoClicker-Pro/issues) as a discussion place for new language support. See the [`auto-clicker/Localisation`](https://github.com/almost109/AutoClicker-Pro/tree/main/auto-clicker/Localisation) project directory to view currently supported languages, the project default being `en-GB`.
 
-The project makes use of the Apple default `Localizable.strings` and `Localizable.stringsdict` to support local translations. See [issue #36](https://github.com/othyn/macos-auto-clicker/issues/36) for some useful links and resources for implementing translations. The short tutorial is;
+The project makes use of the Apple default `Localizable.strings` and `Localizable.stringsdict` to support local translations. The short tutorial is;
 
 0. Clone this project locally to somewhere on your machine.
 1. Open up the project **workspace** in Xcode.
@@ -79,7 +79,7 @@ The project makes use of the Apple default `Localizable.strings` and `Localizabl
     <img width="90%" src="art/ref/readme_localisations_guide.jpg"/>
 </div>
 
-More information on Apple's localisation practices can be found on [their official docs](https://developer.apple.com/localization/), and [their official docs for Xcode](https://developer.apple.com/documentation/xcode/localization). There is also an application, [`mohakapt/Stringz`](https://github.com/mohakapt/Stringz), who's sole intent is to make writing and maintaining language translations easier. See [issue #36](https://github.com/othyn/macos-auto-clicker/issues/36) for some more useful links and resources for implementing translations.
+More information on Apple's localisation practices can be found on [their official docs](https://developer.apple.com/localization/), and [their official docs for Xcode](https://developer.apple.com/documentation/xcode/localization). There is also an application, [`mohakapt/Stringz`](https://github.com/mohakapt/Stringz), whose sole intent is to make writing and maintaining language translations easier.
 
 # :memo: Commit Strategy
 
@@ -138,17 +138,17 @@ _Note: Major versions are not automatically incremented._
 
 Any development against the project should reside in its own development branch using the `dev` branch as its base, later being PR'd back into `dev` when development is completed.
 
-There is a [PR template](.github/pull_request_template.md) that will auto populate the PR with required information to fill in. Reviewers, Assignees and Labels should be set appropriately. The Project should be set to 'macOS Auto Clicker'. The Milestone can be left blank if whats being developed is being developed as a standalone 'thing', however should the development be part of a larger bundle of 'things' (an [Epic](https://www.atlassian.com/agile/project-management/epics)), it should be set to the overarching theme of the development; for an example of this see the existing [Ease of Installation](https://github.com/othyn/macos-auto-clicker/milestone/9) or [Advanced Mode](https://github.com/othyn/macos-auto-clicker/milestone/8) project Milestones (Epics), in which they also have detailed descriptions on what they aim to accomplish.
+There is a [PR template](.github/pull_request_template.md) that will auto populate the PR with required information to fill in. Reviewers, Assignees and Labels should be set appropriately. The Project should be set to 'AutoClicker Pro'. The Milestone can be left blank if whats being developed is being developed as a standalone 'thing', however should the development be part of a larger bundle of 'things' (an [Epic](https://www.atlassian.com/agile/project-management/epics)), it should be set to the overarching theme of the development.
 
 The [GitHub Actions CI/CD workflow](.github/workflows/cicd.yml) will kick in when the `staging` branch is pushed to and kick off a new beta build and release (should one be deemed required, see the [Commit Strategy](#memo-commit-strategy) section above for more details).
 
 # :wrench: Build Strategy
 
-The build process has been automated to provide beta integration builds and production deployment builds, all accessible via the [projects releases page](https://github.com/othyn/macos-auto-clicker/releases).
+The build process has been automated to provide beta integration builds and production deployment builds, all accessible via the [project's releases page](https://github.com/almost109/AutoClicker-Pro/releases).
 
 ## App
 
-[Fastlane](https://docs.fastlane.tools/actions/build_mac_app/) handles the builds with automatic `.app` and `.dmg` release targets (can be easily installed via Brew ~ `$ brew install fastlane` for local development testing). This is further automated behind [GitHub Actions](.github/workflows/cicd.yml) to make the process even more fluid and provide automated CI/CD releases onto the [projects releases page](https://github.com/othyn/macos-auto-clicker/releases) for both release (`main` branch) and beta (`staging` branch) builds based on the [Commit Strategy](#memo-commit-strategy).
+[Fastlane](https://docs.fastlane.tools/actions/build_mac_app/) handles the builds with automatic `.app` and `.dmg` release targets (can be easily installed via Brew ~ `$ brew install fastlane` for local development testing). This is further automated behind [GitHub Actions](.github/workflows/cicd.yml) to make the process even more fluid and provide automated CI/CD releases onto the [project's releases page](https://github.com/almost109/AutoClicker-Pro/releases) for both release (`main` branch) and beta (`staging` branch) builds based on the [Commit Strategy](#memo-commit-strategy).
 
 To locally test the fastlane build, run:
 
@@ -163,7 +163,7 @@ $ fastlane beta
 $ fastlane production
 ```
 
-Which should generate the required `build/Auto Clicker.app`, `build/Auto Clicker.app.dSYM.zip` and `build/Auto Clicker.dmg` build fragments.
+Which should generate the required `build/AutoClicker Pro.app`, `build/AutoClicker Pro.app.dSYM.zip` and `build/AutoClicker Pro.dmg` build fragments.
 
 ## Icon
 

@@ -10,6 +10,7 @@ import SwiftUI
 // https://github.com/joehinkle11/TextFieldDynamicWidth
 struct DynamicWidthTextField: View {
     let title: String
+    let accessibilityLabel: LocalizedStringKey
     @Binding var text: String
 
     @State private var textRect = CGRect()
@@ -24,6 +25,7 @@ struct DynamicWidthTextField: View {
             HStack {
                 TextField(title, text: $text)
                     .frame(width: textRect.width)
+                    .accessibilityLabel(accessibilityLabel)
             }
         }
     }

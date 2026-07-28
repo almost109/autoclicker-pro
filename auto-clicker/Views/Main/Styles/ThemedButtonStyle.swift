@@ -36,7 +36,7 @@ struct ThemedButtonStyle: ButtonStyle {
         var body: some View {
             withAnimation(.easeOut) {
                 configuration.label
-                    .frame(width: self.width, height: self.height)
+                    .frame(minWidth: self.width, minHeight: self.height)
                     .foregroundColor(isEnabled ? self.activeTheme.fontColour : self.activeTheme.backgroundColour.darker)
                     .padding(.horizontal)
                     .padding(.bottom, 1)
@@ -50,5 +50,30 @@ struct ThemedButtonStyle: ButtonStyle {
                     })
             }
         }
+    }
+}
+
+struct CompactFormButtonStyle: ButtonStyle {
+    @Environment(\.isEnabled) private var isEnabled
+
+    func makeBody(configuration: Configuration) -> some View {
+        let panelColor = Color(red: 251 / 255, green: 247 / 255, blue: 236 / 255)
+        let inkColor = Color(red: 33 / 255, green: 28 / 255, blue: 21 / 255)
+
+        configuration.label
+            .font(.system(size: 14))
+            .foregroundColor(inkColor)
+            .padding(.horizontal, 10)
+            .frame(minHeight: 32, maxHeight: 32)
+            .background(
+                RoundedRectangle(cornerRadius: 7)
+                    .fill(panelColor)
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 7)
+                    .stroke(inkColor, lineWidth: 2)
+            )
+            .opacity(self.isEnabled ? 1 : 0.48)
+            .brightness(configuration.isPressed ? -0.06 : 0)
     }
 }

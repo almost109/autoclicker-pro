@@ -12,54 +12,59 @@ import Carbon.HIToolbox
 struct PressKeyListenerModal: View {
     @Environment(\.presentationMode) private var presentationMode
 
-    @Default(.appearanceSelectedTheme) private var activeTheme
     @Default(.autoClickerState) private var formState
 
-    @State private var escapeKeyStreak: Int = 0
-
     func handleInputEvent(input: Input) {
-        guard !input.isMouseInput else {
-            self.formState.pressInput = input
-
-            return
-        }
-
         if input.keyCode == kVK_Escape {
-            self.escapeKeyStreak += 1
-        }
-
-        // Issue is, there is always an initial key press of escape before macOS triggers the repeat flag for holding the key
-        if input.keyCode == kVK_Escape && input.isRepeat {
             self.presentationMode.wrappedValue.dismiss()
-
             return
         }
 
-        if (input.keyCode != kVK_Escape || (input.keyCode == kVK_Escape && self.escapeKeyStreak > 1)) && !input.readable.isEmpty {
-            self.formState.pressInput = input
-
-            self.escapeKeyStreak = 0
+        guard input.isMouseInput || !input.readable.isEmpty else {
+            return
         }
+
+        self.formState.pressInput = input
+        self.presentationMode.wrappedValue.dismiss()
     }
 
     var body: some View {
-        VStack {
-            SmallText("key_listener_modal_press_prompt")
+        VStack(spacing: 12) {
+            Text("key_listener_modal_title")
+                .font(.system(size: 20, weight: .semibold, design: .serif))
 
-            Spacer()
+            Text("key_listener_modal_waiting")
+                .font(.system(size: 16, weight: .medium, design: .serif))
+                .foregroundColor(Color(red: 193 / 255, green: 68 / 255, blue: 14 / 255))
 
-            Text(self.formState.pressInput.readable)
+            Text("key_listener_modal_instruction")
+                .font(.system(size: 14, design: .serif))
 
-            Spacer()
-
-            SmallText("key_listener_modal_dismiss_key_prompt")
-            SmallText("key_listener_modal_dismiss_key_override")
+            Text("key_listener_modal_cancel_hint")
+                .font(.system(size: 12, design: .serif))
+                .foregroundColor(Color(red: 107 / 255, green: 93 / 255, blue: 70 / 255))
         }
-        .frame(width: 300, height: 150)
-        .padding(.vertical, 14)
-        .padding(.horizontal, 5)
-        .background(self.activeTheme.backgroundColour)
+        .multilineTextAlignment(.center)
+        .frame(width: 340, height: 190)
+        .padding(18)
+        .foregroundColor(Color(red: 58 / 255, green: 50 / 255, blue: 38 / 255))
+        .background(
+            RoundedRectangle(cornerRadius: 14)
+                .fill(Color(red: 251 / 255, green: 247 / 255, blue: 236 / 255))
+        )
+        .overlay(
+            RoundedRectangle(cornerRadius: 14)
+                .stroke(Color(red: 33 / 255, green: 28 / 255, blue: 21 / 255), lineWidth: 1.5)
+        )
+        .shadow(
+            color: Color(red: 33 / 255, green: 28 / 255, blue: 21 / 255).opacity(0.16),
+            radius: 10,
+            x: 3,
+            y: 5
+        )
+        .padding(12)
+        .background(Color(red: 244 / 255, green: 239 / 255, blue: 227 / 255))
         .ignoresSafeArea()
-        .overlay(InputAwareView(onPress: handleInputEvent))
+        .overlay(InputAwareView(onPress: self.handleInputEvent))
     }
 }

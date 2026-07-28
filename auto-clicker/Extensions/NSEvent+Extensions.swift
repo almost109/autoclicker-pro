@@ -91,4 +91,4 @@ extension NSEvent {
     }
 }
 
-extension NSEvent.EventType: Codable { }
+extension NSEvent.EventType: @retroactive Codable { }

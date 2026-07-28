@@ -58,6 +58,8 @@ struct KeyboardShortcutsSettingsTabView: View {
                 HStack(alignment: .top) {
                     NumberField(
                         text: "",
+                        accessibilityLabel: "settings_mouse_movement_threshold_title",
+                        accessibilityHint: "settings_mouse_movement_threshold_help",
                         min: MIN_MOUSE_MOVEMENT_THRESHOLD,
                         max: MAX_MOUSE_MOVEMENT_THRESHOLD,
                         number: Binding(

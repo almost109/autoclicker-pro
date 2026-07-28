@@ -8,16 +8,23 @@
 import SwiftUI
 
 struct HelpCommands: Commands {
-    let ghIssueLink = "https://github.com/othyn/macos-auto-clicker/issues"
+    let ghIssueLink = "https://github.com/almost109/AutoClicker-Pro/issues"
 
     var body: some Commands {
         CommandGroup(replacing: .help, addition: {
             Button("help_commands_request_a_feature") {
-                NSWorkspace.shared.open(URL(string: self.ghIssueLink)!)
+                self.openIssuesPage()
             }
             Button("help_commands_report_a_bug") {
-                NSWorkspace.shared.open(URL(string: self.ghIssueLink)!)
+                self.openIssuesPage()
             }
         })
+    }
+
+    private func openIssuesPage() {
+        guard let url = URL(string: self.ghIssueLink) else {
+            return
+        }
+        NSWorkspace.shared.open(url)
     }
 }

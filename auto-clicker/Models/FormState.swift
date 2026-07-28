@@ -36,6 +36,8 @@ struct FormState: Codable, Defaults.Serializable {
 }
 
 extension FormState {
+    private static let defaultTargetTime = "00:00:00"
+
     init() {
         self.intervalMode = .staticInterval
         self.pressInterval = DEFAULT_PRESS_INTERVAL
@@ -46,7 +48,7 @@ extension FormState {
         self.pressAmount = DEFAULT_PRESS_AMOUNT
         self.startDelay = DEFAULT_START_DELAY
         self.startMode = .delay
-        self.targetTime = "00:00:00.000"
+        self.targetTime = Self.defaultTargetTime
         self.repeatAmount = DEFAULT_REPEAT_AMOUNT
     }
 
@@ -76,7 +78,35 @@ extension FormState {
         self.pressAmount = try container.decode(Int.self, forKey: .pressAmount)
         self.startDelay = try container.decode(Int.self, forKey: .startDelay)
         self.startMode = try container.decodeIfPresent(StartMode.self, forKey: .startMode) ?? .delay
-        self.targetTime = try container.decodeIfPresent(String.self, forKey: .targetTime) ?? "00:00:00.000"
+        let storedTargetTime = try container.decodeIfPresent(String.self, forKey: .targetTime)
+            ?? Self.defaultTargetTime
+        self.targetTime = Self.migrateLegacyTargetTime(storedTargetTime)
         self.repeatAmount = try container.decode(Int.self, forKey: .repeatAmount)
+    }
+
+    private static func migrateLegacyTargetTime(_ value: String) -> String {
+        let timeParts = value.split(separator: ":", omittingEmptySubsequences: false)
+        guard timeParts.count == 3,
+              timeParts[0].count == 2,
+              timeParts[1].count == 2 else {
+            return value
+        }
+
+        let secondParts = timeParts[2].split(separator: ".", omittingEmptySubsequences: false)
+        guard secondParts.count == 2,
+              secondParts[0].count == 2,
+              secondParts[1].count == 3,
+              let hour = Int(timeParts[0]),
+              let minute = Int(timeParts[1]),
+              let second = Int(secondParts[0]),
+              let millisecond = Int(secondParts[1]),
+              (0...23).contains(hour),
+              (0...59).contains(minute),
+              (0...59).contains(second),
+              (0...999).contains(millisecond) else {
+            return value
+        }
+
+        return "\(timeParts[0]):\(timeParts[1]):\(secondParts[0])"
     }
 }

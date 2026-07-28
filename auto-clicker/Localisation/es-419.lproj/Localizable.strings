@@ -1,12 +1,16 @@
-"permissions_help_title"             = "Permisos requeridos 🔐";
-"permissions_help_first_paragraph"   = "macOS requiere que esta aplicación tenga permisos de accesibilidad para poder presionar las teclas o botones especificados.";
-"permissions_help_second_paragraph"  = "Probablemente macOS ya te pidió otorgar estos permisos, pero si no, aquí tienes un botón útil para ir allí:";
-"permissions_help_open_sys_pref_btn" = "Abrir Preferencias del Sistema";
+"permissions_help_title"             = "Permiso de accesibilidad";
+"permissions_help_first_paragraph"   = "AutoClicker Pro requiere permiso de accesibilidad para simular clics del mouse.";
+"permissions_help_second_paragraph"  = "Este permiso solo se requiere una vez.\n\nDespués de otorgarlo, vuelve a AutoClicker Pro y la aplicación continuará automáticamente.";
+"permissions_help_open_sys_pref_btn" = "Abrir configuración de accesibilidad";
 "permissions_help_unlock_note"       = "La aplicación se desbloqueará automáticamente unos segundos después de que se otorgue el permiso.";
+"permissions_help_quit_btn"          = "Salir";
+"permissions_status_required"        = "Permiso requerido";
+"permissions_status_granted"         = "Permiso concedido";
 
 "about_about" = "Acerca de";
-"about_url" = "https://github.com/othyn/macos-auto-clicker";
-"about_url_short" = "github.com/othyn/macos-auto-clicker";
+"about_url" = "https://github.com/almost109/AutoClicker-Pro";
+"about_url_short" = "github.com/almost109/AutoClicker-Pro";
+"about_subtitle" = "Clics automáticos precisos para macOS";
 
 "main_window_comma"                   = ",";
 "main_window_full_stop"               = ".";
@@ -14,6 +18,8 @@
 "main_window_press"                   = "presionar";
 "main_window_time"                    = "vez";
 "main_window_times"                   = "veces";
+"main_window_click"                   = "clic";
+"main_window_clicks"                  = "clics";
 "main_window_repeat"                  = "repetir";
 "main_window_wait"                    = "Esperar";
 "main_window_second"                  = "segundo";
@@ -23,8 +29,9 @@
 "main_window_stop_btn"                = "DETENER";
 "main_window_stat_box_next_press_at"  = "PRÓXIMA PULSACIÓN EN";
 "main_window_stat_box_final_press_at" = "ÚLTIMA PULSACIÓN EN";
-"main_window_repo_vanity"             = "con ♥️ por Othyn";
 "main_window_to"                      = "a";
+"main_window_min"                     = "Mín.";
+"main_window_max"                     = "Máx.";
 
 "interval_mode" = "";
 "static" = "Estático";
@@ -36,15 +43,22 @@
 "duration_hours"               = "Hora(s)";
 "duration_modal_cancel_button" = "Cancelar";
 
-"key_listener_modal_press_prompt"         = "Presiona tu entrada deseada...";
+"mousemove_enabled" = "detener";
+"mousemove_disabled" = "continuar";
+"mousemove_modal_cancel_button" = "Cancelar";
+
+"key_listener_modal_press_prompt"         = "Presiona tu entrada deseada…";
 "key_listener_modal_dismiss_key_prompt"   = "Mantén presionada la tecla escape cuando termines.";
 "key_listener_modal_dismiss_key_override" = "Para usar la tecla escape, presiónala dos veces.";
+"key_listener_modal_title"                = "Acción de clic";
+"key_listener_modal_waiting"              = "Esperando entrada…";
+"key_listener_modal_instruction"          = "Haz clic con cualquier botón del mouse o presiona una tecla.";
+"key_listener_modal_cancel_hint"          = "Presiona Esc para cancelar.";
 
 "settings_general"            = "General";
 "settings_shortcuts"          = "Atajos";
 "settings_window"             = "Ventana";
 "settings_appearance"         = "Apariencia";
-"settings_notifications"      = "Notificaciones";
 
 "settings_general_interval_mode_title" = "Modo de Intervalo de Clics";
 "settings_general_interval_mode_help"  = "Elige entre intervalos estáticos (tiempo fijo entre clics) o intervalos de rango (tiempo aleatorio entre valores mín/máx).";
@@ -53,51 +67,51 @@
 "settings_general_app_should_quit_on_close"       = "Salir de la app al cerrar la ventana principal";
 "settings_general_app_should_quit_on_close_help"  = "Cuando se cierre la ventana principal de la aplicación, en vez de mantener la app en segundo plano (comportamiento predeterminado de macOS), sal de la app.";
 
-"settings_general_launch_on_login_title" = "Iniciar al entrar";
 "settings_general_launch_on_login"       = "Iniciar app al iniciar sesión en macOS";
-"settings_general_launch_on_login_help"  = "Cuando inicies sesión en tu cuenta de macOS, ejecuta Auto Clicker automáticamente.";
+"settings_general_launch_on_login_help"  = "Cuando inicies sesión en tu cuenta de macOS, ejecuta AutoClicker Pro automáticamente.";
 
 "settings_general_menu_bar_show_icon_title" = "Barra de menú";
 "settings_general_menu_bar_show_icon"       = "Mostrar ícono en la barra de menú";
 "settings_general_menu_bar_show_icon_help"  = "Siempre mostrar un ícono en la barra de menú de macOS donde se puede acceder a la app y a funciones rápidas.";
 
 "settings_general_menu_bar_show_dynamic_icon"      = "Mostrar ícono dinámico en la barra de menú";
-"settings_general_menu_bar_show_dynamic_icon_help" = "El ícono de la barra de menú se actualizará según el estado del auto clicker.\nNaranja = Contando para iniciar\nVerde = Auto clicker en funcionamiento";
+"settings_general_menu_bar_show_dynamic_icon_help" = "El ícono de la barra de menú se actualizará según el estado de AutoClicker Pro.\nNaranja = Contando para iniciar\nVerde = AutoClicker Pro en funcionamiento";
 
 "settings_general_menu_bar_hide_dock"      = "Ocultar ícono del dock";
 "settings_general_menu_bar_hide_dock_help" = "En vez de ejecutar la app desde el dock, la app se ejecutará desde la barra de menú.";
 
 "settings_keyboard_shortcuts_title" = "Global";
-"settings_keyboard_shortcuts_start" = "Iniciar auto clicker";
-"settings_keyboard_shortcuts_stop"  = "Detener auto clicker";
+"settings_keyboard_shortcuts_start" = "Iniciar AutoClicker Pro";
+"settings_keyboard_shortcuts_stop"  = "Detener AutoClicker Pro";
 "settings_keyboard_shortcuts_help"  = "Atajos globales para iniciar y detener la función de auto click.";
 
 "settings_mouse_movement_title"            = "Activación del ratón";
 "settings_mouse_movement_help"             = "Iniciar/Detener se activará automáticamente cuando la ventana no esté enfocada.";
-"settings_mouse_movement_start_on_move"    = "Iniciar auto clicker al mover el ratón";
-"settings_mouse_movement_stop_on_move"     = "Detener auto clicker al mover el ratón";
+"settings_mouse_movement_start_on_move"    = "Iniciar AutoClicker Pro al mover el ratón";
+"settings_mouse_movement_stop_on_move"     = "Detener AutoClicker Pro al mover el ratón";
 "settings_mouse_movement_threshold_title"  = "Umbral";
 "settings_mouse_movement_threshold_help"   = "La distancia que debe moverse el ratón para activar la acción de Control del ratón.";
 "settings_mouse_movement_threshold_pixels" = "píxeles";
 
 "settings_general_notify_title"     = "Notificar cuando";
-"settings_general_notify_on_start"  = "El auto clicker inicia";
-"settings_general_notify_on_finish" = "El auto clicker termina";
+"settings_general_notify_on_start"  = "AutoClicker Pro inicia";
+"settings_general_notify_on_finish" = "AutoClicker Pro termina";
 
 "settings_window_stay_ontop_title" = "Visibilidad";
 "settings_window_stay_ontop"       = "Mantener siempre la ventana principal al frente";
 "settings_window_stay_ontop_help"  = "Cuando hagas clic en otra ventana, esto define si la ventana debe desaparecer detrás de otras ventanas (comportamiento predeterminado de macOS) o permanecer al frente de todas.";
 
-"help_commands_request_a_feature" = "Solicitar una función...";
-"help_commands_report_a_bug"      = "Reportar un problema...";
+"help_commands_request_a_feature" = "Solicitar una función…";
+"help_commands_report_a_bug"      = "Reportar un problema…";
 
 "menu_bar_item_start"            = "Iniciar ahora";
 "menu_bar_item_stop"             = "Detener ahora";
 "menu_bar_item_hide_show_show"   = "Mostrar";
 "menu_bar_item_hide_show_hide"   = "Ocultar";
-"menu_bar_item_preferences"      = "Preferencias...";
-"menu_bar_item_about"            = "Acerca de...";
+"menu_bar_item_preferences"      = "Preferencias…";
+"menu_bar_item_about"            = "Acerca de…";
 "menu_bar_item_quit"             = "Salir";
+"menu_bar_item_hide_show_suffix" = "AutoClicker Pro";
 
 "colour_black"  = "Negro";
 "colour_blue"   = "Azul";
@@ -115,12 +129,67 @@
 "colour_white"  = "Blanco";
 "colour_yellow" = "Amarillo";
 
-// NumberField (Legacy)
-"min: %lld, max: %lld" = "mín: %lld, máx: %lld";
-
 "left_mouse_click" = "Click izquierdo";
 "right_mouse_click" = "Click derecho";
 "middle_mouse_click" = "Click en el medio";
 "main_window_start_mode" = "Modo de inicio";
 "main_window_start_mode_delay" = "Retraso";
 "main_window_start_mode_target_time" = "Hora objetivo";
+"main_window_target_time" = "Hora objetivo";
+"main_window_tagline" = "un clic, repetido con precisión";
+"main_window_click_settings" = "Configuración de clics";
+"main_window_click_interval" = "Intervalo entre clics";
+"main_window_click_action" = "Acción de clic";
+"main_window_repeat_count" = "Repeticiones";
+"main_window_target_time_24_hour" = "Hora objetivo (24 horas)";
+"main_window_delay_seconds" = "Retraso (segundos)";
+"main_window_click_rate" = "≈ %.1f clics/s";
+"main_window_click_rate_calculation" = "%.0f ÷ %lld = %.1f clics/s";
+"main_window_estimated_duration_value" = "≈ %.1f s";
+"main_window_estimated_duration_calculation" = "%lld × %lld %@";
+"main_window_start_caption" = "— los clics comienzan al alcanzar la hora objetivo —";
+"main_window_summary_target_time" = "Hora objetivo";
+"main_window_summary_estimated_finish" = "Fin estimado";
+"main_window_summary_estimated_duration" = "Duración estimada";
+"main_window_summary_delay_value" = "+%lld s";
+"duration_abbreviation_milliseconds" = "ms";
+"duration_abbreviation_seconds" = "s";
+"duration_abbreviation_minutes" = "min";
+"duration_abbreviation_hours" = "h";
+"network_time_title" = "Hora de red";
+"network_time_current_time" = "Hora actual";
+"network_time_status_offline" = "Sin conexión";
+"network_time_status_synchronizing" = "Sincronizando…";
+"network_time_status_synchronized" = "Sincronizado";
+"network_time_status_failed" = "Error de sincronización";
+"network_time_source_network" = "Hora de red";
+"network_time_source_local" = "Reloj local";
+"network_time_server" = "Servidor NTP";
+"network_time_offset" = "Desfase del reloj";
+"network_time_rtt" = "Ida y vuelta";
+"network_time_last_sync" = "Última sincronización";
+"network_time_waiting" = "Esperando la primera sincronización";
+"network_time_not_available" = "No disponible";
+
+"accessibility_click_interval" = "Intervalo entre clics";
+"accessibility_minimum_click_interval" = "Intervalo mínimo entre clics";
+"accessibility_maximum_click_interval" = "Intervalo máximo entre clics";
+"accessibility_press_amount" = "Cantidad de pulsaciones";
+"accessibility_repeat_amount" = "Cantidad de repeticiones";
+"accessibility_start_delay" = "Retraso de inicio";
+"accessibility_number_range_hint" = "Ingresa un valor entre %lld y %lld.";
+"accessibility_target_time" = "Hora objetivo";
+"accessibility_target_time_hint" = "Ingresa una hora en formato de 24 horas con horas, minutos y segundos.";
+"accessibility_start_mode" = "Modo de inicio";
+"accessibility_start_mode_hint" = "Elige si los clics automáticos comienzan después de un retraso o a una hora objetivo.";
+"accessibility_click_interval_mode" = "Modo de intervalo entre clics";
+"accessibility_click_interval_mode_hint" = "Elige un intervalo fijo o un intervalo aleatorio dentro de un rango.";
+"accessibility_theme_color_selected" = "Seleccionado";
+"accessibility_theme_color_not_selected" = "No seleccionado";
+"accessibility_theme_color_hint" = "Selecciona este color para el tema de la aplicación.";
+"accessibility_start_button_hint" = "Inicia los clics automáticos usando el modo de inicio seleccionado.";
+"accessibility_start_countdown" = "Cuenta regresiva de inicio";
+"accessibility_start_countdown_hint" = "Los clics automáticos comenzarán cuando termine la cuenta regresiva.";
+"accessibility_stop_button_hint" = "Detiene la cuenta regresiva o los clics automáticos.";
+"accessibility_network_time_dashboard" = "Detalles de sincronización de hora de red";
+"accessibility_network_time_footer" = "Resumen de hora de red";

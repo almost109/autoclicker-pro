@@ -12,6 +12,8 @@
 		5DB2BECC2A54826B008AFE05 /* MouseMoveSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB2BECB2A54826B008AFE05 /* MouseMoveSelector.swift */; };
 		5DB2BECE2A5482DC008AFE05 /* MouseMoveModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB2BECD2A5482DC008AFE05 /* MouseMoveModal.swift */; };
 		5DB2BED02A548325008AFE05 /* MouseMove.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DB2BECF2A548325008AFE05 /* MouseMove.swift */; };
+		A1C3D0012E00000100C0D3E1 /* SNTPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C3D0022E00000100C0D3E1 /* SNTPService.swift */; };
+		A1C3D0032E00000100C0D3E1 /* NetworkTimeDashboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C3D0042E00000100C0D3E1 /* NetworkTimeDashboard.swift */; };
 		B50022CA2875F5BF00610474 /* HelpCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = B50022C92875F5BF00610474 /* HelpCommands.swift */; };
 		B510760927F4A21500BB1CDA /* DateStrings in Frameworks */ = {isa = PBXBuildFile; productRef = B510760827F4A21500BB1CDA /* DateStrings */; };
 		B510760C27F4A23300BB1CDA /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = B510760B27F4A23300BB1CDA /* KeyboardShortcuts */; };
@@ -57,7 +59,6 @@
 		B5D603F12883035E00655D2C /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D603F02883035E00655D2C /* ContainerView.swift */; };
 		B5D603F528830A3600655D2C /* SettingsTabItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D603F428830A3600655D2C /* SettingsTabItemView.swift */; };
 		B5E4213728057BA900C2CA2D /* LoggerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E4213628057BA900C2CA2D /* LoggerService.swift */; };
-		A1C3D0012E00000100C0D3E1 /* SNTPService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C3D0022E00000100C0D3E1 /* SNTPService.swift */; };
 		B5E6395027CA4CDD008B111A /* FieldConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E6394F27CA4CDD008B111A /* FieldConstants.swift */; };
 		B5E6395327CA62EB008B111A /* ThemedButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E6395227CA62EB008B111A /* ThemedButtonStyle.swift */; };
 		B5E6395627CA76CB008B111A /* Duration.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5E6395527CA76CB008B111A /* Duration.swift */; };
@@ -86,6 +87,8 @@
 		5DB2BECB2A54826B008AFE05 /* MouseMoveSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MouseMoveSelector.swift; sourceTree = "<group>"; };
 		5DB2BECD2A5482DC008AFE05 /* MouseMoveModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MouseMoveModal.swift; sourceTree = "<group>"; };
 		5DB2BECF2A548325008AFE05 /* MouseMove.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MouseMove.swift; sourceTree = "<group>"; };
+		A1C3D0022E00000100C0D3E1 /* SNTPService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNTPService.swift; sourceTree = "<group>"; };
+		A1C3D0042E00000100C0D3E1 /* NetworkTimeDashboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTimeDashboard.swift; sourceTree = "<group>"; };
 		B50022C92875F5BF00610474 /* HelpCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpCommands.swift; sourceTree = "<group>"; };
 		B510760E27F4A25400BB1CDA /* WindowStateService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowStateService.swift; sourceTree = "<group>"; };
 		B510761027F4A33D00BB1CDA /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -105,7 +108,7 @@
 		B510763F280113DB00BB1CDA /* Input.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Input.swift; sourceTree = "<group>"; };
 		B53027F4264C0D73002B8610 /* AutoClickSimulator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClickSimulator.swift; sourceTree = "<group>"; };
 		B53027F9264C2748002B8610 /* DelayTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DelayTimer.swift; sourceTree = "<group>"; };
-		B53BDC4C264BED93001F8E57 /* AutoClicker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutoClicker.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B53BDC4C264BED93001F8E57 /* AutoClicker Pro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AutoClicker Pro.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B53BDC4F264BED93001F8E57 /* AutoClickerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoClickerApp.swift; sourceTree = "<group>"; };
 		B53BDC53264BED95001F8E57 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B53BDC56264BED95001F8E57 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -121,6 +124,8 @@
 		B5BCE804287BFB5A00B739AD /* Color+ExpressibleByStringLiteral.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+ExpressibleByStringLiteral.swift"; sourceTree = "<group>"; };
 		B5BCE808287C2F4D00B739AD /* SmallText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallText.swift; sourceTree = "<group>"; };
 		B5BCE80B287C343900B739AD /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "en-GB"; path = "en-GB.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		A1C3D0102E00000100C0D3E1 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = "de.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		A1C3D0112E00000100C0D3E1 /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		B5BCE80E287C344200B739AD /* en-GB */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "en-GB"; path = "en-GB.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		B5BCE810287C38ED00B739AD /* CGVector+DefaultsSerializable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGVector+DefaultsSerializable.swift"; sourceTree = "<group>"; };
 		B5BF093F2883230D008092D9 /* MenuBarService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarService.swift; sourceTree = "<group>"; };
@@ -130,7 +135,6 @@
 		B5D603F02883035E00655D2C /* ContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerView.swift; sourceTree = "<group>"; };
 		B5D603F428830A3600655D2C /* SettingsTabItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTabItemView.swift; sourceTree = "<group>"; };
 		B5E4213628057BA900C2CA2D /* LoggerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerService.swift; sourceTree = "<group>"; };
-		A1C3D0022E00000100C0D3E1 /* SNTPService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SNTPService.swift; sourceTree = "<group>"; };
 		B5E6394F27CA4CDD008B111A /* FieldConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldConstants.swift; sourceTree = "<group>"; };
 		B5E6395227CA62EB008B111A /* ThemedButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemedButtonStyle.swift; sourceTree = "<group>"; };
 		B5E6395527CA76CB008B111A /* Duration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Duration.swift; sourceTree = "<group>"; };
@@ -271,7 +275,7 @@
 		B53BDC4D264BED93001F8E57 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B53BDC4C264BED93001F8E57 /* AutoClicker.app */,
+				B53BDC4C264BED93001F8E57 /* AutoClicker Pro.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -349,6 +353,7 @@
 				B5BCE808287C2F4D00B739AD /* SmallText.swift */,
 				5DB2BECB2A54826B008AFE05 /* MouseMoveSelector.swift */,
 				5DB2BECD2A5482DC008AFE05 /* MouseMoveModal.swift */,
+				A1C3D0042E00000100C0D3E1 /* NetworkTimeDashboard.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -445,8 +450,8 @@
 				B510762727F4BD5500BB1CDA /* Defaults */,
 				B5A042542CB298CC000A1E39 /* LaunchAtLogin */,
 			);
-			productName = "auto-clicker";
-			productReference = B53BDC4C264BED93001F8E57 /* AutoClicker.app */;
+			productName = "AutoClicker Pro";
+			productReference = B53BDC4C264BED93001F8E57 /* AutoClicker Pro.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -470,7 +475,9 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				Base,
+				de,
 				"en-GB",
+				"es-419",
 			);
 			mainGroup = B53BDC43264BED93001F8E57;
 			packageReferences = (
@@ -617,6 +624,7 @@
 				B5BCE809287C2F4D00B739AD /* SmallText.swift in Sources */,
 				B5E4213728057BA900C2CA2D /* LoggerService.swift in Sources */,
 				A1C3D0012E00000100C0D3E1 /* SNTPService.swift in Sources */,
+				A1C3D0032E00000100C0D3E1 /* NetworkTimeDashboard.swift in Sources */,
 				B5E92B0E27F1036B00A7FC63 /* DurationModal.swift in Sources */,
 				B5462E762A61761000C5F280 /* Bundle+AppInfo.swift in Sources */,
 				B5B0B2AF2882EE6E00462F11 /* ACWindow.swift in Sources */,
@@ -640,6 +648,8 @@
 			isa = PBXVariantGroup;
 			children = (
 				B5BCE80B287C343900B739AD /* en-GB */,
+				A1C3D0102E00000100C0D3E1 /* de */,
+				A1C3D0112E00000100C0D3E1 /* es-419 */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -782,7 +792,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "auto-clicker/Build Assets/auto_clicker.entitlements";
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
@@ -795,7 +804,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				INFOPLIST_FILE = "auto-clicker/Build Assets/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Auto Clicker Pro";
+				INFOPLIST_KEY_CFBundleDisplayName = "AutoClicker Pro";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -804,7 +813,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.autoclicker.pro;
-				PRODUCT_NAME = AutoClicker;
+				PRODUCT_NAME = "AutoClicker Pro";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -814,7 +823,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "auto-clicker/Build Assets/auto_clicker.entitlements";
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
@@ -827,7 +835,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				INFOPLIST_FILE = "auto-clicker/Build Assets/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Auto Clicker Pro";
+				INFOPLIST_KEY_CFBundleDisplayName = "AutoClicker Pro";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -836,7 +844,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.11.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.autoclicker.pro;
-				PRODUCT_NAME = AutoClicker;
+				PRODUCT_NAME = "AutoClicker Pro";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 			};

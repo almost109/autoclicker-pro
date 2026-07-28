@@ -2,6 +2,7 @@ import SwiftUI
 
 struct DynamicWidthNumberField: View {
     var placeholder: String
+    var accessibilityLabel: LocalizedStringKey
     var min: Int
     var max: Int
 
@@ -11,7 +12,11 @@ struct DynamicWidthNumberField: View {
     @FocusState private var isFocused: Bool
 
     var body: some View {
-        DynamicWidthTextField(title: placeholder, text: $draft)
+        DynamicWidthTextField(
+            title: placeholder,
+            accessibilityLabel: accessibilityLabel,
+            text: $draft
+        )
             .textFieldStyle(UnderlinedTextFieldStyle())
             .padding(.horizontal, 5)
             .focused($isFocused)
@@ -30,6 +35,18 @@ struct DynamicWidthNumberField: View {
                     draft = filtered
                 }
             }
+            .accessibilityLabel(accessibilityLabel)
+            .accessibilityValue(draft)
+            .accessibilityHint(
+                String(
+                    format: NSLocalizedString(
+                        "accessibility_number_range_hint",
+                        comment: "Accessibility hint describing the allowed numeric range"
+                    ),
+                    min,
+                    max
+                )
+            )
     }
 
     private func commitInput() {

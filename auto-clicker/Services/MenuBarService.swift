@@ -164,7 +164,7 @@ final class MenuBarService {
         }
 
         statusBarButton.image = NSImage(systemSymbolName: "cursorarrow.click.badge.clock",
-                                        accessibilityDescription: "auto clicker")
+                                        accessibilityDescription: "AutoClicker Pro")
     }
 
     static func changeImageColour(newColor: NSColor) {
@@ -173,7 +173,7 @@ final class MenuBarService {
 
         if Defaults[.menuBarShowDynamicIcon],
            let statusBarButton = self.statusBarItem?.button {
-            statusBarButton.image = NSImage(systemSymbolName: "cursorarrow.click.2", accessibilityDescription: "auto clicker")
+            statusBarButton.image = NSImage(systemSymbolName: "cursorarrow.click.2", accessibilityDescription: "AutoClicker Pro")
             statusBarButton.image = statusBarButton.image!.withSymbolConfiguration(
                 NSImage.SymbolConfiguration(paletteColors: [NSColor(Color.primary), newColor])
             )

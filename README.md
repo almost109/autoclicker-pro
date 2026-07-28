@@ -166,16 +166,6 @@ See the LICENSE file for details.
 
 ---
 
-## Acknowledgements
-
-This project was originally based on the open-source project:
-
-https://github.com/othyn/macos-auto-clicker
-
-AutoClicker Pro has since been extended with new features and architectural improvements, including high-precision scheduling and SNTP time synchronization.
-
----
-
 <div align="center">
 
 Built with ❤️ using Swift & SwiftUI

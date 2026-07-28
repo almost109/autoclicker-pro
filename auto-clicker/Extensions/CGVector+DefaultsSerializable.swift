@@ -9,4 +9,4 @@ import Foundation
 import Defaults
 import CoreGraphics
 
-extension CGVector: DefaultsSerializable {}
+extension CGVector: @retroactive DefaultsSerializable {}

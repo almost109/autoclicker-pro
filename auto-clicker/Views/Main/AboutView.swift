@@ -34,11 +34,17 @@ struct VisualEffectView: NSViewRepresentable {
 struct AboutView: View {
     var body: some View {
         VStack(spacing: 10) {
-            Image(nsImage: NSImage(named: "AppIcon")!)
+            if let appIcon = NSImage(named: "AppIcon") {
+                Image(nsImage: appIcon)
+            }
 
-            Text("\(Bundle.main.appName)")
+            Text(Bundle.main.displayName)
                 .font(.system(size: 28, weight: .bold))
                 .multilineTextAlignment(.center)
+
+            Text("about_subtitle")
+                .font(.system(size: 13, weight: .regular))
+                .foregroundColor(.secondary)
 
             Text("\(Bundle.main.appVersionLong) (\(Bundle.main.appBuild))")
                 .font(.system(size: 12, weight: .medium))
@@ -46,9 +52,11 @@ struct AboutView: View {
                 .textSelection(.enabled)
                 .padding(.bottom)
 
-            Link("about_url_short", destination: URL(string: String(format: NSLocalizedString("about_url", comment: "About URL")))!)
-                .font(.system(size: 12, weight: .regular))
-                .multilineTextAlignment(.center)
+            if let projectURL = URL(string: String(format: NSLocalizedString("about_url", comment: "About URL"))) {
+                Link("about_url_short", destination: projectURL)
+                    .font(.system(size: 12, weight: .regular))
+                    .multilineTextAlignment(.center)
+            }
 
             Text(Bundle.main.copyright)
                 .font(.system(size: 10, weight: .regular))

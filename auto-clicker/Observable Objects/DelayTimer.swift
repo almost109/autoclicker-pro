@@ -62,18 +62,11 @@ final class DelayTimer: ObservableObject {
         let parts = time.split(separator: ":", omittingEmptySubsequences: false)
         guard parts.count == 3,
               parts[0].count == 2,
-              parts[1].count == 2 else {
-            return nil
-        }
-
-        let secondParts = parts[2].split(separator: ".", omittingEmptySubsequences: false)
-        guard secondParts.count == 2,
-              secondParts[0].count == 2,
-              secondParts[1].count == 3,
+              parts[1].count == 2,
+              parts[2].count == 2,
               let hour = Int(parts[0]),
               let minute = Int(parts[1]),
-              let second = Int(secondParts[0]),
-              let millisecond = Int(secondParts[1]),
+              let second = Int(parts[2]),
               (0...23).contains(hour),
               (0...59).contains(minute),
               (0...59).contains(second) else {
@@ -84,7 +77,7 @@ final class DelayTimer: ObservableObject {
         components.hour = hour
         components.minute = minute
         components.second = second
-        components.nanosecond = millisecond * 1_000_000
+        components.nanosecond = 0
 
         guard let today = calendar.date(from: components) else {
             return nil

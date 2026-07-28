@@ -14,6 +14,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     private var aboutWindowController: NSWindowController?
 
     func applicationWillFinishLaunching(_ notification: Notification) {
+        let migratedFormState = Defaults[.autoClickerState]
+        Defaults[.autoClickerState] = migratedFormState
+
         WindowStateService.refreshDockIconState()
     }
 

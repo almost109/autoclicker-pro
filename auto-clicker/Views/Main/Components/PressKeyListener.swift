@@ -14,10 +14,20 @@ struct PressKeyListener: View {
     @Default(.autoClickerState) private var formState
 
     var body: some View {
-        Button(self.formState.pressInput.readable) {
+        Button {
             self.showingPressKeyListenerModal = true
+        } label: {
+            HStack(spacing: 8) {
+                Text(self.formState.pressInput.readable)
+                    .lineLimit(1)
+
+                Image(systemName: "chevron.up.chevron.down")
+                    .font(.system(size: 9, weight: .medium))
+                    .accessibilityHidden(true)
+            }
         }
-        .buttonStyle(UnderlinedButtonStyle())
+        .buttonStyle(CompactFormButtonStyle())
+        .frame(minWidth: 150)
         .sheet(isPresented: self.$showingPressKeyListenerModal, content: {
             PressKeyListenerModal()
         })

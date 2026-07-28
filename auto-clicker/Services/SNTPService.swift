@@ -18,12 +18,14 @@ struct TimeSynchronizationSnapshot: Equatable {
     var lastSynchronizedTime: Date?
     var clockOffset: TimeInterval
     var roundTripDelay: TimeInterval
+    var server: String?
     var status: TimeSynchronizationStatus
 
     static let initial = TimeSynchronizationSnapshot(
         lastSynchronizedTime: nil,
         clockOffset: 0,
         roundTripDelay: 0,
+        server: nil,
         status: .idle
     )
 }
@@ -130,6 +132,7 @@ final class SNTPService: ObservableObject {
         }
 
         let server = self.servers[index]
+        self.updateState { $0.server = server }
         self.query(server: server) { [weak self] result in
             guard let self else {
                 return
@@ -151,6 +154,7 @@ final class SNTPService: ObservableObject {
             $0.lastSynchronizedTime = measurement.synchronizedAt
             $0.clockOffset = measurement.clockOffset
             $0.roundTripDelay = measurement.roundTripDelay
+            $0.server = measurement.server
             $0.status = .synchronized(server: measurement.server)
         }
         LoggerService.sntpSuccess(

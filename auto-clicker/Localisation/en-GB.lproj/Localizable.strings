@@ -1,12 +1,16 @@
-"permissions_help_title"             = "Permissions Required 🔐";
-"permissions_help_first_paragraph"   = "macOS requires that this app has accessibility permissions granted to it in order to press the specified keys or buttons.";
-"permissions_help_second_paragraph"  = "You should have already been prompted by macOS to grant these permissions but if not, here's a handy button to get you there:";
-"permissions_help_open_sys_pref_btn" = "Open System Preferences";
+"permissions_help_title"             = "Accessibility Permission";
+"permissions_help_first_paragraph"   = "AutoClicker Pro requires Accessibility permission to simulate mouse clicks.";
+"permissions_help_second_paragraph"  = "This permission is required only once.\n\nAfter granting permission, return to AutoClicker Pro and the application will continue automatically.";
+"permissions_help_open_sys_pref_btn" = "Open Accessibility Settings";
 "permissions_help_unlock_note"       = "The app will automatically unlock within a few seconds of the permission being granted.";
+"permissions_help_quit_btn"          = "Quit";
+"permissions_status_required"        = "Permission Required";
+"permissions_status_granted"         = "Permission Granted";
 
 "about_about" = "About";
-"about_url" = "https://github.com/othyn/macos-auto-clicker";
-"about_url_short" = "github.com/othyn/macos-auto-clicker";
+"about_url" = "https://github.com/almost109/AutoClicker-Pro";
+"about_url_short" = "github.com/almost109/AutoClicker-Pro";
+"about_subtitle" = "Precision auto-clicking for macOS";
 
 "main_window_comma"                   = ",";
 "main_window_full_stop"               = ".";
@@ -14,20 +18,20 @@
 "main_window_press"                   = "press";
 "main_window_time"                    = "time";
 "main_window_times"                   = "times";
+"main_window_click"                   = "click";
+"main_window_clicks"                  = "clicks";
 "main_window_repeat"                  = "repeat";
 "main_window_wait"                    = "Wait";
 "main_window_second"                  = "second";
 "main_window_seconds"                 = "seconds";
 "main_window_before_starting"         = " before starting";
-"main_window_stop_mousemove"          = "And";
-"main_window_stop_mousemove_end"      = "when the mouse moves";
-"main_window_stop_mousemove_pixel"    = "pixels";
 "main_window_start_btn"               = "START";
 "main_window_stop_btn"                = "STOP";
 "main_window_stat_box_next_press_at"  = "NEXT PRESS AT";
 "main_window_stat_box_final_press_at" = "FINAL PRESS AT";
-"main_window_repo_vanity"             = "with ♥️ by Othyn";
 "main_window_to"                      = "to";
+"main_window_min"                     = "Min";
+"main_window_max"                     = "Max";
 
 "interval_mode" = "";
 "static" = "Static";
@@ -35,23 +39,26 @@
 
 "duration_milliseconds"        = "Millisecond(s)";
 "duration_seconds"             = "Second(s)";
-"duration_minutes"             = "Minutes(s)";
-"duration_hours"               = "Hours(s)";
+"duration_minutes"             = "Minute(s)";
+"duration_hours"               = "Hour(s)";
 "duration_modal_cancel_button" = "Cancel";
 
 "mousemove_enabled"             = "stop";
 "mousemove_disabled"            = "continue";
 "mousemove_modal_cancel_button" = "Cancel";
 
-"key_listener_modal_press_prompt"         = "Press your desired input...";
+"key_listener_modal_press_prompt"         = "Press your desired input…";
 "key_listener_modal_dismiss_key_prompt"   = "Hold the escape key when done.";
 "key_listener_modal_dismiss_key_override" = "To use the escape key itself, press it twice.";
+"key_listener_modal_title"                = "Click Action";
+"key_listener_modal_waiting"              = "Waiting for input…";
+"key_listener_modal_instruction"          = "Click any mouse button or press a key.";
+"key_listener_modal_cancel_hint"          = "Press Esc to cancel.";
 
 "settings_general"            = "General";
 "settings_shortcuts"          = "Shortcuts";
 "settings_window"             = "Window";
 "settings_appearance"         = "Appearance";
-"settings_notifications"      = "Notifications";
 
 "settings_general_interval_mode_title" = "Click Interval Mode";
 "settings_general_interval_mode_help"  = "Choose between static intervals (fixed time between clicks) or range intervals (random time between min/max values).";
@@ -60,51 +67,51 @@
 "settings_general_app_should_quit_on_close"       = "Quit app on main window close";
 "settings_general_app_should_quit_on_close_help"  = "When the main window of the application is closed, instead of keeping the app running in the background (macOS default behaviour), quit the app.";
 
-"settings_general_launch_on_login_title" = "Launch at Login";
 "settings_general_launch_on_login"       = "Launch app on macOS user login";
-"settings_general_launch_on_login_help"  = "When you login to your macOS account, automatically run Auto Clicker.";
+"settings_general_launch_on_login_help"  = "When you login to your macOS account, automatically run AutoClicker Pro.";
 
 "settings_general_menu_bar_show_icon_title" = "Menu Bar";
 "settings_general_menu_bar_show_icon"       = "Show menu bar icon";
 "settings_general_menu_bar_show_icon_help"  = "Always show an icon in the macOS menu bar where the app and quick access functionality can be accessed.";
 
 "settings_general_menu_bar_show_dynamic_icon"      = "Show dynamic menu bar icon";
-"settings_general_menu_bar_show_dynamic_icon_help" = "The menu bar icon will update based on the state of the auto clicker.\nOrange = Counting down to start\nGreen = Auto clicker running";
+"settings_general_menu_bar_show_dynamic_icon_help" = "The menu bar icon will update based on the state of AutoClicker Pro.\nOrange = Counting down to start\nGreen = AutoClicker Pro running";
 
 "settings_general_menu_bar_hide_dock"      = "Hide dock icon";
 "settings_general_menu_bar_hide_dock_help" = "Instead of the app running from the dock, the app will instead run from the menu bar.";
 
 "settings_keyboard_shortcuts_title" = "Global";
-"settings_keyboard_shortcuts_start" = "Start auto clicker";
-"settings_keyboard_shortcuts_stop"  = "Stop auto clicker";
+"settings_keyboard_shortcuts_start" = "Start AutoClicker Pro";
+"settings_keyboard_shortcuts_stop"  = "Stop AutoClicker Pro";
 "settings_keyboard_shortcuts_help"  = "Global shortcuts to start and stop the auto click functionality.";
 
 "settings_mouse_movement_title"            = "Mouse Activation";
 "settings_mouse_movement_help"             = "Starting/Stopping will activate automatically when the window isn't focused.";
-"settings_mouse_movement_start_on_move"    = "Start auto clicker when mouse moves";
-"settings_mouse_movement_stop_on_move"     = "Stop auto clicker when mouse moves";
+"settings_mouse_movement_start_on_move"    = "Start AutoClicker Pro when mouse moves";
+"settings_mouse_movement_stop_on_move"     = "Stop AutoClicker Pro when mouse moves";
 "settings_mouse_movement_threshold_title"  = "Threshold";
 "settings_mouse_movement_threshold_help"   = "The distance the mouse must move to trigger the Mouse Activation action.";
 "settings_mouse_movement_threshold_pixels" = "pixels";
 
-"settings_general_notify_title"     = "Notify when...";
-"settings_general_notify_on_start"  = "... auto clicking starts";
-"settings_general_notify_on_finish" = "... auto clicking stops";
+"settings_general_notify_title"     = "Notify when…";
+"settings_general_notify_on_start"  = "… auto clicking starts";
+"settings_general_notify_on_finish" = "… auto clicking stops";
 
 "settings_window_stay_ontop_title" = "Visibility";
 "settings_window_stay_ontop"       = "Always keep the main window on top";
-"settings_window_stay_ontop_help"  = "When you click on another window, this defines whether the window should dissapear behind the other windows (macOS default behaviour), or stay on top of all other windows.";
+"settings_window_stay_ontop_help"  = "When you click on another window, this defines whether the window should disappear behind the other windows (macOS default behaviour), or stay on top of all other windows.";
 
-"help_commands_request_a_feature" = "Request a feature...";
-"help_commands_report_a_bug"      = "Report a problem...";
+"help_commands_request_a_feature" = "Request a feature…";
+"help_commands_report_a_bug"      = "Report a problem…";
 
 "menu_bar_item_start"            = "Start now";
 "menu_bar_item_stop"             = "Stop now";
 "menu_bar_item_hide_show_show"   = "Show";
 "menu_bar_item_hide_show_hide"   = "Hide";
-"menu_bar_item_preferences"      = "Preferences...";
-"menu_bar_item_about"            = "About...";
+"menu_bar_item_preferences"      = "Preferences…";
+"menu_bar_item_about"            = "About…";
 "menu_bar_item_quit"             = "Quit";
+"menu_bar_item_hide_show_suffix" = "AutoClicker Pro";
 
 "colour_black"  = "Black";
 "colour_blue"   = "Blue";
@@ -122,12 +129,67 @@
 "colour_white"  = "White";
 "colour_yellow" = "Yellow";
 
-// NumberField (Legacy)
-"min: %lld, max: %lld" = "min: %lld, max: %lld";
-
 "left_mouse_click" = "Left Mouse";
 "right_mouse_click" = "Right Mouse";
 "middle_mouse_click" = "Middle Mouse";
 "main_window_start_mode" = "Start mode";
 "main_window_start_mode_delay" = "Delay";
 "main_window_start_mode_target_time" = "Target Time";
+"main_window_target_time" = "Target time";
+"main_window_tagline" = "one stroke, repeated precisely";
+"main_window_click_settings" = "Click Settings";
+"main_window_click_interval" = "Click Interval";
+"main_window_click_action" = "Click Action";
+"main_window_repeat_count" = "Repeat Count";
+"main_window_target_time_24_hour" = "Target Time (24-hour)";
+"main_window_delay_seconds" = "Delay (seconds)";
+"main_window_click_rate" = "≈ %.1f clicks/s";
+"main_window_click_rate_calculation" = "%.0f ÷ %lld = %.1f clicks/s";
+"main_window_estimated_duration_value" = "≈ %.1f sec";
+"main_window_estimated_duration_calculation" = "%lld × %lld %@";
+"main_window_start_caption" = "— clicking begins the moment the target time is reached —";
+"main_window_summary_target_time" = "Target Time";
+"main_window_summary_estimated_finish" = "Estimated Finish";
+"main_window_summary_estimated_duration" = "Estimated Duration";
+"main_window_summary_delay_value" = "+%lld sec";
+"duration_abbreviation_milliseconds" = "ms";
+"duration_abbreviation_seconds" = "sec";
+"duration_abbreviation_minutes" = "min";
+"duration_abbreviation_hours" = "hr";
+"network_time_title" = "Network Time";
+"network_time_current_time" = "Current Time";
+"network_time_status_offline" = "Offline";
+"network_time_status_synchronizing" = "Synchronizing…";
+"network_time_status_synchronized" = "Synchronized";
+"network_time_status_failed" = "Synchronization Failed";
+"network_time_source_network" = "Network Time";
+"network_time_source_local" = "Local Clock";
+"network_time_server" = "NTP Server";
+"network_time_offset" = "Clock Offset";
+"network_time_rtt" = "Round Trip";
+"network_time_last_sync" = "Last Sync";
+"network_time_waiting" = "Waiting for first synchronization";
+"network_time_not_available" = "Not available";
+
+"accessibility_click_interval" = "Click interval";
+"accessibility_minimum_click_interval" = "Minimum click interval";
+"accessibility_maximum_click_interval" = "Maximum click interval";
+"accessibility_press_amount" = "Number of presses";
+"accessibility_repeat_amount" = "Repeat count";
+"accessibility_start_delay" = "Start delay";
+"accessibility_number_range_hint" = "Enter a value from %lld to %lld.";
+"accessibility_target_time" = "Target time";
+"accessibility_target_time_hint" = "Enter a 24-hour time in hours, minutes, and seconds.";
+"accessibility_start_mode" = "Start mode";
+"accessibility_start_mode_hint" = "Choose whether automatic clicking starts after a delay or at a target time.";
+"accessibility_click_interval_mode" = "Click interval mode";
+"accessibility_click_interval_mode_hint" = "Choose a fixed click interval or a random interval within a range.";
+"accessibility_theme_color_selected" = "Selected";
+"accessibility_theme_color_not_selected" = "Not selected";
+"accessibility_theme_color_hint" = "Selects this application theme color.";
+"accessibility_start_button_hint" = "Starts automatic clicking using the selected start mode.";
+"accessibility_start_countdown" = "Start countdown";
+"accessibility_start_countdown_hint" = "Automatic clicking will begin when the countdown finishes.";
+"accessibility_stop_button_hint" = "Stops the countdown or automatic clicking.";
+"accessibility_network_time_dashboard" = "Network time synchronization details";
+"accessibility_network_time_footer" = "Network time summary";
