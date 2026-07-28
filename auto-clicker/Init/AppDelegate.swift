@@ -27,6 +27,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         MenuBarService.refreshState()
 
         PermissionsService.acquireAccessibilityPrivileges()
+        SNTPService.shared.startSynchronizing()
 
         // Initialize mouse start monitoring if enabled
         if Defaults[.mouseStartOnMove] {
@@ -36,6 +37,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         WindowStateService.shouldExitOnClose()
+    }
+
+    func applicationWillTerminate(_ notification: Notification) {
+        SNTPService.shared.stopSynchronizing()
     }
 
     func applicationWillBecomeActive(_ notification: Notification) {

@@ -98,10 +98,12 @@ final class DelayTimer: ObservableObject {
     }
 
     private func startAtTargetTime(onFinish: @escaping () -> Void) {
-        let wallClockNow = Date()
+        let localClockNow = Date()
+        let clockOffset = SNTPService.shared.currentOffset()
+        let networkClockNow = localClockNow.addingTimeInterval(clockOffset)
         guard let targetDate = Self.targetDate(
             for: Defaults[.autoClickerState].targetTime,
-            now: wallClockNow
+            now: networkClockNow
         ) else {
             return
         }
@@ -111,7 +113,7 @@ final class DelayTimer: ObservableObject {
         self.activity = ProcessInfo.processInfo.beginActivity(.delayTimer)
         self.updateMenuState(isWaiting: true)
 
-        let remaining = max(0, targetDate.timeIntervalSince(wallClockNow))
+        let remaining = max(0, targetDate.timeIntervalSince(networkClockNow))
         let deadline = DispatchTime.now() + remaining
         self.targetDeadline = deadline
         self.updateTargetCountdown()

@@ -68,4 +68,32 @@ final class LoggerService {
             "Loc. Y: \(location.y)"
         ])
     }
+
+    static func sntpSuccess(
+        server: String,
+        offset: TimeInterval,
+        roundTripDelay: TimeInterval,
+        callingFile: String = #fileID,
+        callingFunction: String = #function
+    ) {
+        LoggerService.log(file: callingFile, function: callingFunction, [
+            "SNTP synchronization succeeded",
+            "Server: \(server)",
+            "Clock offset: \(offset) seconds",
+            "Round trip delay: \(roundTripDelay) seconds"
+        ])
+    }
+
+    static func sntpFailure(
+        server: String,
+        error: Error,
+        callingFile: String = #fileID,
+        callingFunction: String = #function
+    ) {
+        LoggerService.log(file: callingFile, function: callingFunction, [
+            "SNTP synchronization failed",
+            "Server: \(server)",
+            "Error: \(error.localizedDescription)"
+        ])
+    }
 }
