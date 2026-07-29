@@ -28,10 +28,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
         let permissionsService = PermissionsService.shared
         permissionsService.requestAccessibilityPrivilegesIfNeeded()
-        self.refreshAccessibilityState(
-            origin: .launch,
-            caller: #function
-        )
+        self.refreshAccessibilityState()
 
         SNTPService.shared.startSynchronizing()
 
@@ -54,11 +51,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
 
     func applicationDidBecomeActive(_ notification: Notification) {
-        self.refreshAccessibilityState(
-            confirmRuntimeRevocation: true,
-            origin: .applicationDidBecomeActive,
-            caller: #function
-        )
+        self.refreshAccessibilityState(confirmRuntimeRevocation: true)
     }
 
     func applicationDidHide(_ notification: Notification) {
@@ -125,21 +118,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         ].joined(separator: " ")
     }
 
-    private func refreshAccessibilityState(
-        confirmRuntimeRevocation: Bool = false,
-        origin: AccessibilityCheckOrigin = .other,
-        caller: String = #function
-    ) {
+    private func refreshAccessibilityState(confirmRuntimeRevocation: Bool = false) {
         let permissionsService = PermissionsService.shared
         let isTrusted = permissionsService.refreshAccessibilityPrivileges(
-            origin: origin,
-            caller: caller,
             confirmingRevocationWith: confirmRuntimeRevocation
                 ? { [weak self] in
-                    self?.refreshAccessibilityState(
-                        origin: .confirmationTimer,
-                        caller: "revocationConfirmationTimer"
-                    )
+                    self?.refreshAccessibilityState()
                 }
                 : nil
         )

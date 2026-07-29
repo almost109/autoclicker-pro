@@ -51,10 +51,6 @@ final class AutoClickSimulator: ObservableObject {
         self.input = Defaults[.autoClickerState].pressInput
         self.pressesPerIteration = Defaults[.autoClickerState].pressAmount
         self.remainingIterations = Defaults[.autoClickerState].repeatAmount
-        LoggerService.autoClickState(
-            isActive: self.isAutoClicking,
-            remainingIterations: self.remainingIterations
-        )
 
         let timeInterval = self.duration.asTimeInterval(interval: self.interval)
         let now = Date()
@@ -94,14 +90,7 @@ final class AutoClickSimulator: ObservableObject {
     }
 
     func stop(triggeredByMouseMovement: Bool = false) {
-        let wasAutoClicking = self.isAutoClicking
         self.isAutoClicking = false
-        if wasAutoClicking {
-            LoggerService.autoClickState(
-                isActive: self.isAutoClicking,
-                remainingIterations: self.remainingIterations
-            )
-        }
 
         Self.removeMonitor(&self.monitorObject)
 
