@@ -92,7 +92,7 @@ struct NetworkTimeDashboard: View {
             VStack(alignment: .leading, spacing: 5) {
                 HStack {
                     Text("network_time_title")
-                        .font(.system(size: 18, weight: .semibold, design: .serif))
+                        .font(.system(size: 17, weight: .semibold, design: .serif))
 
                     Spacer()
 

@@ -11,12 +11,95 @@ import Foundation
 enum LoggerService {
     private static func log(file: String, function: String, _ lines: [String]) {
         #if DEBUG
+        let timestampMilliseconds = Date().timeIntervalSince1970 * 1_000
+        let thread = Thread.isMainThread
+            ? "main"
+            : Thread.current.name ?? String(describing: Thread.current)
         NSLog(">~  Who: \(file) ~ \(function)")
+        NSLog(">~ When: \(String(format: "%.3f", timestampMilliseconds)) ms | Thread: \(thread)")
 
         for line in lines {
             NSLog(">~ What: \(line)")
         }
         #endif
+    }
+
+    static func accessibilityCheck(
+        origin: AccessibilityCheckOrigin,
+        caller: String,
+        result: Bool,
+        previousPublishedValue: Bool,
+        newPublishedValue: Bool,
+        confirmationPendingBefore: Bool,
+        confirmationPendingAfter: Bool,
+        callingFile: String = #fileID,
+        callingFunction: String = #function
+    ) {
+        self.log(file: callingFile, function: callingFunction, [
+            "Accessibility check origin: \(origin.rawValue)",
+            "Caller: \(caller)",
+            "AX result: \(result)",
+            "Previous isTrusted: \(previousPublishedValue)",
+            "New published isTrusted: \(newPublishedValue)",
+            "Confirmation pending before: \(confirmationPendingBefore)",
+            "Confirmation pending after: \(confirmationPendingAfter)"
+        ])
+    }
+
+    static func accessibilityTransitionIfNeeded(
+        from previousValue: Bool,
+        to newValue: Bool,
+        origin: AccessibilityCheckOrigin,
+        caller: String,
+        callingFile: String = #fileID,
+        callingFunction: String = #function
+    ) {
+        guard previousValue != newValue else {
+            return
+        }
+
+        self.log(file: callingFile, function: callingFunction, [
+            "Accessibility transition: \(previousValue) -> \(newValue)",
+            "Origin: \(origin.rawValue)",
+            "Caller: \(caller)"
+        ])
+    }
+
+    static func accessibilityConfirmationTimer(
+        event: String,
+        origin: AccessibilityCheckOrigin,
+        caller: String,
+        callingFile: String = #fileID,
+        callingFunction: String = #function
+    ) {
+        self.log(file: callingFile, function: callingFunction, [
+            "Accessibility confirmation timer: \(event)",
+            "Origin: \(origin.rawValue)",
+            "Caller: \(caller)"
+        ])
+    }
+
+    static func permissionsViewPresented(
+        isTrusted: Bool,
+        callingFile: String = #fileID,
+        callingFunction: String = #function
+    ) {
+        self.log(file: callingFile, function: callingFunction, [
+            "PermissionsView presented",
+            "Published isTrusted: \(isTrusted)"
+        ])
+    }
+
+    static func autoClickState(
+        isActive: Bool,
+        remainingIterations: Int,
+        callingFile: String = #fileID,
+        callingFunction: String = #function
+    ) {
+        self.log(file: callingFile, function: callingFunction, [
+            "AutoClickSimulator active: \(isActive)",
+            "Remaining iterations: \(remainingIterations)"
+        ])
     }
 
     static func permissionState(enabled: Bool, callingFile: String = #fileID, callingFunction: String = #function) {
@@ -42,9 +125,21 @@ enum LoggerService {
     }
 
     static func permissionTrustedState(callingFile: String = #fileID, callingFunction: String = #function) {
-        LoggerService.log(file: callingFile, function: callingFunction, [
-            "Is trusted: \(AXIsProcessTrusted())"
-        ])
+        let permissionsService = PermissionsService.shared
+        let previousPublishedValue = permissionsService.isTrusted
+        let confirmationPending = permissionsService.isRevocationConfirmationPending
+        let isCurrentlyTrusted = AXIsProcessTrusted()
+        self.accessibilityCheck(
+            origin: .other,
+            caller: callingFunction,
+            result: isCurrentlyTrusted,
+            previousPublishedValue: previousPublishedValue,
+            newPublishedValue: previousPublishedValue,
+            confirmationPendingBefore: confirmationPending,
+            confirmationPendingAfter: confirmationPending,
+            callingFile: callingFile,
+            callingFunction: callingFunction
+        )
     }
 
     static func pressInputEvent(event: NSEvent, callingFile: String = #fileID, callingFunction: String = #function) {
@@ -55,6 +150,7 @@ enum LoggerService {
 
     static func simPress(input: Input, location: CGPoint, callingFile: String = #fileID, callingFunction: String = #function) {
         LoggerService.log(file: callingFile, function: callingFunction, [
+            "AutoClickSimulator actively clicking: true",
             "Key: \(input.readable)",
             "Mod: \(input.modifiers)",
             "Loc. X: \(location.x)",

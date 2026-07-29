@@ -79,6 +79,11 @@ struct PermissionsView: View {
             )
             .padding(24)
         }
+        .onAppear {
+            LoggerService.permissionsViewPresented(
+                isTrusted: self.permissionsService.isTrusted
+            )
+        }
     }
 
     private var permissionStatus: some View {

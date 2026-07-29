@@ -180,12 +180,21 @@ struct MainView: View {
         .background(
             RoundedRectangle(cornerRadius: 22)
                 .fill(Color.autoClickerPanel)
-                .shadow(color: Color.autoClickerInk.opacity(0.14), radius: 10, x: 5, y: 7)
         )
         .overlay(
             RoundedRectangle(cornerRadius: 22)
                 .stroke(Color.autoClickerInk, lineWidth: 2)
         )
+        .overlay(alignment: .topTrailing) {
+            DecorativeStar()
+                .padding(.top, 10)
+                .padding(.trailing, 14)
+        }
+        .overlay(alignment: .topTrailing) {
+            DecorativeAccentStroke()
+                .frame(width: 28, height: 14)
+                .offset(x: -45, y: -7)
+        }
         .padding(14)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(self.painterlyBackground.ignoresSafeArea())
@@ -194,32 +203,13 @@ struct MainView: View {
     }
 
     private var painterlyBackground: some View {
-        ZStack {
-            Color.autoClickerBackground
-
-            LinearGradient(
-                colors: [
-                    Color.autoClickerBlue.opacity(0.10),
-                    Color.autoClickerBackground.opacity(0.18),
-                    Color.autoClickerPrimary.opacity(0.07)
-                ],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-
-            LinearGradient(
-                colors: [
-                    .clear,
-                    Color.autoClickerSynchronizationGreen.opacity(0.08)
-                ],
-                startPoint: .center,
-                endPoint: .bottomTrailing
-            )
-        }
+        Color.autoClickerBackground
     }
 
     private var header: some View {
         HStack(spacing: 12) {
+            BrandTargetMark()
+
             VStack(alignment: .leading, spacing: 0) {
                 Text(Bundle.main.displayName)
                     .font(.system(size: 23, weight: .medium, design: .serif))
@@ -365,7 +355,7 @@ struct MainView: View {
         VStack(alignment: .leading, spacing: 10) {
             MockupSectionTitle(
                 title: "main_window_start_mode",
-                color: .autoClickerBlue
+                color: .autoClickerOchre
             )
 
             HStack(spacing: 8) {
@@ -528,10 +518,101 @@ private struct MockupSectionTitle: View {
     let color: Color
 
     var body: some View {
-        Text(self.title)
-            .font(.system(size: 18, weight: .semibold, design: .serif))
-            .italic()
-            .foregroundColor(self.color)
+        HStack(spacing: 8) {
+            Text(self.title)
+                .font(.system(size: 18, weight: .semibold, design: .serif))
+                .italic()
+                .foregroundColor(self.color)
+
+            HandDrawnUnderline(color: self.color)
+                .frame(width: 54, height: 8)
+                .accessibilityHidden(true)
+        }
+    }
+}
+
+private struct BrandTargetMark: View {
+    var body: some View {
+        ZStack {
+            Circle()
+                .fill(Color.autoClickerPrimary)
+
+            Circle()
+                .fill(Color.autoClickerBlue)
+                .padding(6)
+
+            Circle()
+                .fill(Color.autoClickerInk)
+                .padding(10)
+        }
+        .frame(width: 28, height: 28)
+        .accessibilityHidden(true)
+    }
+}
+
+private struct DecorativeStar: View {
+    var body: some View {
+        Image(systemName: "star.fill")
+            .font(.system(size: 12, weight: .medium))
+            .foregroundColor(.autoClickerBlue)
+            .accessibilityHidden(true)
+    }
+}
+
+private struct DecorativeAccentStroke: View {
+    var body: some View {
+        Path { path in
+            path.move(to: CGPoint(x: 1, y: 11))
+            path.addCurve(
+                to: CGPoint(x: 13, y: 5),
+                control1: CGPoint(x: 5, y: 3),
+                control2: CGPoint(x: 10, y: 2)
+            )
+            path.addCurve(
+                to: CGPoint(x: 20, y: 12),
+                control1: CGPoint(x: 16, y: 7),
+                control2: CGPoint(x: 16, y: 13)
+            )
+            path.addCurve(
+                to: CGPoint(x: 27, y: 8),
+                control1: CGPoint(x: 23, y: 11),
+                control2: CGPoint(x: 24, y: 7)
+            )
+        }
+        .stroke(
+            Color.autoClickerBlue,
+            style: StrokeStyle(lineWidth: 1.8, lineCap: .round, lineJoin: .round)
+        )
+        .accessibilityHidden(true)
+    }
+}
+
+private struct HandDrawnUnderline: View {
+    let color: Color
+
+    var body: some View {
+        Path { path in
+            path.move(to: CGPoint(x: 0, y: 5))
+            path.addCurve(
+                to: CGPoint(x: 18, y: 4),
+                control1: CGPoint(x: 7, y: 1),
+                control2: CGPoint(x: 12, y: 7)
+            )
+            path.addCurve(
+                to: CGPoint(x: 36, y: 4),
+                control1: CGPoint(x: 25, y: 1),
+                control2: CGPoint(x: 30, y: 7)
+            )
+            path.addCurve(
+                to: CGPoint(x: 54, y: 3),
+                control1: CGPoint(x: 43, y: 1),
+                control2: CGPoint(x: 49, y: 5)
+            )
+        }
+        .stroke(
+            self.color,
+            style: StrokeStyle(lineWidth: 1.5, lineCap: .round, lineJoin: .round)
+        )
     }
 }
 

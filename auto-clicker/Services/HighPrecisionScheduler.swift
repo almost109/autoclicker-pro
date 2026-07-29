@@ -172,7 +172,32 @@ final class HighPrecisionScheduler {
         self.schedule = nil
         self.stateLock.unlock()
 
-        self.completionQueue.async(execute: completedSchedule.completion)
+        self.completionQueue.async { [weak self] in
+            guard let self else {
+                return
+            }
+
+            self.stateLock.lock()
+            let shouldComplete = self.generation == completedSchedule.generation
+            self.stateLock.unlock()
+
+            guard shouldComplete else {
+                return
+            }
+
+            guard TimingDiagnostics.isEnabled else {
+                completedSchedule.completion()
+                return
+            }
+
+            let actualExecutionTime = DispatchTime.now()
+            completedSchedule.completion()
+
+            TimingDiagnostics.record(
+                scheduled: completedSchedule.deadline,
+                actual: actualExecutionTime
+            )
+        }
     }
 
     private static func remainingTime(until deadline: DispatchTime) -> TimeInterval {

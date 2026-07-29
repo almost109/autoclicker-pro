@@ -28,7 +28,10 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
 
         let permissionsService = PermissionsService.shared
         permissionsService.requestAccessibilityPrivilegesIfNeeded()
-        self.refreshAccessibilityState()
+        self.refreshAccessibilityState(
+            origin: .launch,
+            caller: #function
+        )
 
         SNTPService.shared.startSynchronizing()
 
@@ -51,7 +54,11 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
     }
 
     func applicationDidBecomeActive(_ notification: Notification) {
-        self.refreshAccessibilityState()
+        self.refreshAccessibilityState(
+            confirmRuntimeRevocation: true,
+            origin: .applicationDidBecomeActive,
+            caller: #function
+        )
     }
 
     func applicationDidHide(_ notification: Notification) {
@@ -118,9 +125,25 @@ final class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         ].joined(separator: " ")
     }
 
-    private func refreshAccessibilityState() {
+    private func refreshAccessibilityState(
+        confirmRuntimeRevocation: Bool = false,
+        origin: AccessibilityCheckOrigin = .other,
+        caller: String = #function
+    ) {
         let permissionsService = PermissionsService.shared
-        guard !permissionsService.refreshAccessibilityPrivileges() else {
+        let isTrusted = permissionsService.refreshAccessibilityPrivileges(
+            origin: origin,
+            caller: caller,
+            confirmingRevocationWith: confirmRuntimeRevocation
+                ? { [weak self] in
+                    self?.refreshAccessibilityState(
+                        origin: .confirmationTimer,
+                        caller: "revocationConfirmationTimer"
+                    )
+                }
+                : nil
+        )
+        guard !isTrusted else {
             MenuBarService.enableAllMenuBarItems()
             return
         }
