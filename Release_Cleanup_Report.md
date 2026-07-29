@@ -83,15 +83,13 @@ Items that can superficially appear unused but are intentionally retained includ
 
 ### Repository-only design and documentation assets
 
+The legacy purple README icon exports were confirmed unused and removed from
+`art/icon`. The unreferenced editable `icon.fig` source was retained conservatively
+because its archival and design provenance cannot be determined from static
+references alone.
+
 The following files are not referenced by the current README or application bundle:
 
-- `art/icon/Icon-16.png`
-- `art/icon/Icon-32.png`
-- `art/icon/Icon-64.png`
-- `art/icon/Icon-128.png`
-- `art/icon/Icon-256.png`
-- `art/icon/Icon-512.png`
-- `art/icon/icon.fig`
 - `art/ref/readme_macOS_sequoia_prompt.png`
 - `art/ref/readme_macOS_sequoia_settings.png`
 - `art/screenshot.afphoto`
@@ -104,7 +102,7 @@ were retained rather than deleted.
 
 The README actively references:
 
-- `art/icon/Icon-1024.png`
+- `auto-clicker/Build Assets/Assets.xcassets/AppIcon.appiconset/Icon-1024.png`
 - `art/screenshots/main-ui.png`
 
 ## Build Verification

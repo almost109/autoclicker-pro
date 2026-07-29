@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="art/icon/Icon-1024.png" alt="AutoClicker Pro" width="220"/>
+<img src="auto-clicker/Build%20Assets/Assets.xcassets/AppIcon.appiconset/Icon-1024.png" alt="AutoClicker Pro" width="220"/>
 
 # AutoClicker Pro
 
